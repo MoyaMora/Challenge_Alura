@@ -1,15 +1,15 @@
 # Importacion de archivo py como libreria:
-from llamando_archivo_csv import preparar_reviews_csv_para_llm
+#from llamando_archivo_csv import preparar_reviews_csv_para_llm
 from llamando_archivo_pdf import preparar_pdf_para_llm
 
 # Cargando la base de datos csv y pdf.
 # Definimos las rutas de los archivos en tu computadora:
-ruta_archivo_csv = "/Users/josemoya/VisualStudio/Oracle_Curso/Pensamiento_Compatucional/Challenge_Alura/reviews_challenge.csv"
-ruta_archivo_pdf = "/Users/josemoya/VisualStudio/Oracle_Curso/Pensamiento_Compatucional/Challenge_Alura/manual_de_pokemon.pdf"
+#ruta_archivo_csv = "/Users/josemoya/VisualStudio/Oracle_Curso/Pensamiento_Compatucional/Challenge_Alura/reviews_challenge.csv"
+ruta_archivo_pdf = "/Users/josemoya/VisualStudio/Challenge_Alura_2026/Política_de_Uso_de_Correo_Electrónico_y_Seguridad_de_la_Información.pdf"
 
 # Ejecutamos las funciones importadas para cargar los conocimientos
 print("Cargando base de conocimientos...")
-llm_input_text_csv = preparar_reviews_csv_para_llm(ruta_archivo_csv, max_characters=2000)
+#llm_input_text_csv = preparar_reviews_csv_para_llm(ruta_archivo_csv, max_characters=2000)
 llm_input_text_pdf = preparar_pdf_para_llm(ruta_archivo_pdf,max_characters=2000)
 
 # Cargando libreria para trabajar con la IA Groq:
@@ -32,18 +32,18 @@ while True:
         break
     
     # Escogio el archivo csv:
-    elif Eleccion == 'csv':
-        if not llm_input_text_csv:
-            print("No hay texto del CSV disponible para consultar. Asegúrate de que el CSV fue procesado correctamente.")
-            continue
+    #elif Eleccion == 'csv':
+    #    if not llm_input_text_csv:
+    #        print("No hay texto del CSV disponible para consultar. Asegúrate de que el CSV fue procesado correctamente.")
+    #        continue
         
-        pregunta_usuario = input("Pregunta sobre las reseñas: ")
+    #    pregunta_usuario = input("Pregunta sobre las reseñas: ")
         
-        # Dando el RAG al LLM para el CSV
-        contenido_completo = f"He aquí un conjunto de reseñas de productos, separadas por '####':\n\n{llm_input_text_csv}\n\nBasado en estas reseñas, {pregunta_usuario}"
-        system_prompt = """Eres un asistente experto en análisis de sentimientos de productos. " \
-                        "Responde a la pregunta del usuario basándote únicamente en el texto de las reseñas proporcionadas.
-                        Si hay informacion en ingles traduzcala a español para que el usuario entienda."""
+    #   # Dando el RAG al LLM para el CSV
+    #    contenido_completo = f"He aquí un conjunto de reseñas de productos, separadas por '####':\n\n{llm_input_text_csv}\n\nBasado en estas reseñas, {pregunta_usuario}"
+    #    system_prompt = """Eres un asistente experto en análisis de sentimientos de productos. " \
+    #                    "Responde a la pregunta del usuario basándote únicamente en el texto de las reseñas proporcionadas.
+    #                    Si hay informacion en ingles traduzcala a español para que el usuario entienda."""
     
     # Escogiendo el archivo pdf:
     elif Eleccion == 'pdf':

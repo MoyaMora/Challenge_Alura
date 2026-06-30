@@ -1,4 +1,16 @@
 Archivos_que_no_deben_subirse
-__pycache__/
-.DS_Store
 .env
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+
+# Logs
+*.log
+

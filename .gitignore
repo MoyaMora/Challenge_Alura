@@ -1,3 +1,4 @@
 Archivos_que_no_deben_subirse
 __pycache__/
 .DS_Store
+.env

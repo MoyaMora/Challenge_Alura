@@ -1,0 +1,29 @@
+# Ignorar entornos virtuales locales 
+# (¡Súper importante, pesan mucho!)
+.venv/
+venv/
+env/
+ENV/
+
+# Ignorar caché de Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+
+# Ignorar carpetas de Git
+.git/
+.gitignore
+
+# Ignorar archivos de configuración del editor:
+# (Visual Studio Code, Mac, etc.)
+.vscode/
+.DS_Store
+
+# Ignorar carpetas de Docker locales si las hubiera
+.docker/
+
+# Ignorar tus credenciales locales 
+# (Docker las inyectará por Docker Compose)
+.env

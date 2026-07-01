@@ -1,8 +1,7 @@
 
 #Importacion de librerias.
 #Librerias para tratar y cargar archivo csv:
-import pandas as pd
-import io
+from librerias_backend import *
 
 
 # CONFIGURACIÓN PARA TERMINAL: Fuerza a pandas a mostrar todas las columnas 

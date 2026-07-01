@@ -1,4 +1,4 @@
-from pypdf import PdfReader
+from librerias_backend import *
 
 def preparar_pdf_subido_para_llm(archivo_subido):
 

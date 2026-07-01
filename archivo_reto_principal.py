@@ -40,7 +40,7 @@ load_dotenv()
 # Importo mis librerias creadas para proesar y cargar datos de:
 # csv y pdf.
 from llamando_archivo_csv import preparar_reviews_csv_para_llm
-from llamando_archivo_pdf import preparar_pdf_para_llm
+from llamando_archivo_pdf import preparar_pdf_subido_para_llm
 
 # Iniciando la creación de la aplicacion con fastapi:
 app = FastAPI(
@@ -103,7 +103,7 @@ async def subir_pdf(file: UploadFile = File(...)):
 
     try:
          # Subiendo el archivo pdf seleccionado:
-        texto_completo = preparar_pdf_para_llm(file.file)
+        texto_completo = preparar_pdf_subido_para_llm(file.file)
 
         if not texto_completo:
             raise HTTPException(status_code=400, detail="No se pudo extraer texto del PDF.")
@@ -192,33 +192,34 @@ def consultar_agente(consulta: Consulta):
     
     contenido_completo = f"""Contexto del documento recuperado de la base 
                          de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"""
+    
+    #
+    #
+    # Usando la IA modelo Groq:
 
-
-# Usando la IA modelo Groq:
-try:
-    # No se olvide subir la api key de groq al archivo .env
-    client = Groq()
-    response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[
-            {"role": "system",
-            "content": system_prompt},
-            
-            {"role": "user",
-            "content": contenido_completo},
-            ],
-            temperature=0.2 # Temperatura baja para asegurar que se apegue al contexto recuperado
-    )
-    return{
-        "fuente_utilizada": eleccion,
-        "pregunta": pregunta_usuario,
-        "respuesta_agente": response.choices[0].message.content,
-        # Agregamos los fragmentos reales utilizados para que el usuario verifique la fuente
-        "contexto_utilizado_rag": resultados_busqueda["documents"][0]
+    try:
+        # No se olvide subir la api key de groq al archivo .env
+        client = Groq()
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {"role": "system",
+                 "content": system_prompt},
+                 {"role": "user",
+                  "content": contenido_completo},
+                ],
+                temperature=0.2 # Temperatura baja para asegurar que se apegue al contexto recuperado
+            )
+        return{
+            "fuente_utilizada": eleccion,
+            "pregunta": pregunta_usuario,
+            "respuesta_agente": response.choices[0].message.content,
+            # Agregamos los fragmentos reales utilizados para que el usuario verifique la fuente
+            # "contexto_utilizado_rag": resultados_busqueda["documents"][0]
         }
-# Mandando mensaje de error:
-except Exception as e:
-    raise HTTPException(status_code=500, detail=f"Ocurrió un error con la LLModel: {e}")
+    # Mandando mensaje de error:
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ocurrió un error con la LLModel: {e}")
 
 
 

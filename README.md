@@ -1,58 +1,136 @@
-Imaginemos el siguiente escenario: fuimos contratades por una empresa; Puede ser una fintech (tecnología financiera), una consultora o una startup (empresa emergente), que tiene grandes volúmenes de documentos internos: manuales, informes, políticas y hojas de cálculo. El problema es que las personas pierden horas buscando información dentro de sus archivos. 
+# 🤖 Agente de IA para Consulta Inteligente de Documentos
 
-La solución que se requiere es un agente de inteligencia artificial que cualquier persona colaboradora pueda usar para hacer preguntas y recibir respuestas directas en lenguaje natural, sin necesidad de abrir ningún documento.
+## 📖 Descripción del proyecto
 
-Explicando las tres etapas del proyecto.
+Imaginemos el siguiente escenario:
 
-El desafío tiene tres partes principales. Expliquemos cada una:
+Una empresa (ya sea una fintech, una consultora o una startup) cuenta con una gran cantidad de documentos internos, como:
 
-1. Primero, elegiremos un documento; Puede ser un PDF o un CSV, crearemos código que lea y procese ese
-   archivo. Es decir, nuestra aplicación entenderá el contenido que hay dentro del documento. Ese documento puede tratar sobre:
-   
-      1.1 Políticas internas de la empresa.
-      1.2 Datos de ventas de productos.
-      1.3 Documentación sobre las herramientas y tecnologías que la empresa utiliza. 
-   
-   También pondremos a disposición un documento de sugerencia, pero podremos utilizar los 
-   documentos que queramos y personalizar nuestro agente, porque este proyecto es nuestro.
+- Manuales
+- Informes
+- Políticas
+- Hojas de cálculo
 
-2. En segundo lugar; Construiremos un agente de IA que pueda responder preguntas sobre ese documento.
-   Alguien podría escribir, por ejemplo:
-     
-     2.1 “¿Cuál fue el producto más vendido en diciembre de 2015?”
-     2.2 “¿Qué lenguajes de programación se usan en el back-end (parte del servidor) de la plataforma de
-         ventas de la empresa?”.
-   
-   El agente encuentra la respuesta en el documento y la devuelve de forma clara. Así de simple.
+El problema es que las personas colaboradoras invierten mucho tiempo buscando información dentro de estos documentos.
 
-3. Y aquí está el gran diferencial, vamos a hacer el deploy (implementación) de ese agente en la nube de
-   Oracle (OCI). Eso significa que nuestra aplicación saldrá de nuestra computadora y estará accesible públicamente; Ejecutándose de verdad en la nube.
+### Objetivo
 
-Describiendo tecnologías y entregables:
+Desarrollar un **agente de Inteligencia Artificial** que permita realizar preguntas en lenguaje natural y obtener respuestas precisas sin necesidad de abrir o revisar manualmente los documentos.
 
-Ahora, hablemos de las tecnologías. No hace falta alarmarnos por la lista. Sugerimos:
-   a) Python (Python) para escribir el código. 
-   b) LangChain (LangChain) para montar el agente.
-   c) PyPDF (PyPDF) o Pandas (Pandas) para leer los documentos.
-   d) Un modelo de lenguaje que puede ser:
-         -> Gemma.
-         -> ChatGPT. 
-         -> Cohere. 
-u otro, para hacer que la magia suceda. 
+---
 
-Para el deploy (implementación), la sugerencia es:
-   e) OCI Compute (OCI Compute).
+# 🚀 Etapas del proyecto
 
-pero estas son sugerencias, no obligaciones. Si contamos con una herramienta que conocemos mejor y que tenga más sentido para nuestro proyecto, podemos usarla. 
+## 1. Procesamiento de documentos
 
-El proyecto, como dijimos, es de quien lo crea. Lo importante es que la solución que presentemos funcione.
+El primer paso consiste en seleccionar uno o más documentos (PDF o CSV) y procesarlos para que la aplicación pueda comprender su contenido.
 
-Hablemos entonces de lo que necesitamos entregar. Debemos publicar el código en GitHub, con:
+Los documentos pueden contener información como:
 
-1. Un repositorio organizado.
-2. Un historial de commits (confirmaciones).
-3. Un README bien elaborado, con:
-   3.1 Una descripción de la arquitectura que montamos.
-   3.2 Ejemplos de preguntas y respuestas que el agente puede resolver.
-   3.3 Instrucciones para quien quiera ejecutar el proyecto.
-   3.4 Un enlace o una captura de pantalla de la aplicación corriendo en OCI, para comprobar que el deploy (implementación) realmente funcionó.
+- 📄 Políticas internas de la empresa.
+- 📊 Datos de ventas.
+- 💻 Documentación técnica.
+- 📚 Manuales de usuario.
+- 📈 Reportes internos.
+
+> **Nota:** Se proporciona un documento de ejemplo, pero cada participante puede utilizar cualquier documento que desee para personalizar su agente.
+
+---
+
+## 2. Construcción del agente de IA
+
+Una vez procesado el documento, el siguiente paso consiste en crear un agente capaz de responder preguntas sobre su contenido.
+
+### Ejemplos de consultas
+
+**Pregunta**
+
+> ¿Cuál fue el producto más vendido en diciembre de 2015?
+
+**Pregunta**
+
+> ¿Qué lenguajes de programación utiliza el backend de la plataforma?
+
+El agente deberá localizar la información dentro del documento y responder de manera clara y precisa.
+
+---
+
+## 3. Despliegue en Oracle Cloud (OCI)
+
+Finalmente, el agente deberá publicarse en la nube utilizando **Oracle Cloud Infrastructure (OCI)**.
+
+El objetivo es que la aplicación deje de ejecutarse únicamente en el equipo local y quede disponible públicamente.
+
+---
+
+# 🛠 Tecnologías sugeridas
+
+Las siguientes tecnologías son únicamente una recomendación.
+
+Puedes utilizar cualquier herramienta que se adapte mejor a tu solución.
+
+|        Tecnología        |          Uso            |
+|--------------------------|-------------------------|
+| Python                   | Desarrollo del proyecto |
+| LangChain                | Construcción del agente |
+| PyPDF                    | Lectura de archivos PDF |
+| Pandas                   | Lectura de archivos CSV |
+| ChatGPT / Gemma / Cohere | Modelo de lenguaje      |
+| OCI Compute              | Despliegue en la nube   |
+
+> **Importante:** Estas herramientas son sugerencias, no requisitos obligatorios.
+
+---
+
+# 📦 Entregables
+
+El proyecto deberá publicarse en un repositorio de GitHub que incluya:
+
+- Un repositorio organizado.
+- Historial de commits.
+- Código fuente completo.
+- Archivo **README.md**.
+
+---
+
+# 📄 Contenido mínimo del README
+
+El README deberá incluir:
+
+## 1. Descripción de la arquitectura
+
+Explicar cómo está construida la solución.
+
+---
+
+## 2. Ejemplos de uso
+
+Mostrar preguntas que el agente puede responder.
+
+**Ejemplo**
+
+```
+Pregunta:
+¿Cuál fue el producto más vendido en diciembre de 2015?
+
+Respuesta:
+El producto más vendido fue...
+```
+
+---
+
+## 3. Instrucciones de instalación
+
+Explicar cómo ejecutar el proyecto localmente.
+
+---
+
+## 4. Evidencia del despliegue
+
+Agregar alguno de los siguientes elementos:
+
+- Enlace público de la aplicación.
+- Captura de pantalla.
+- URL del despliegue en OCI.
+
+Esto servirá para demostrar que el proyecto fue desplegado correctamente.

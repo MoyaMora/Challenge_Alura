@@ -23,7 +23,7 @@ Desarrollar un **agente de Inteligencia Artificial** que permita realizar pregun
 
 ## 1. Procesamiento de documentos
 
-El primer paso consiste en seleccionar uno o más documentos (PDF o CSV) y procesarlos para que la aplicación pueda comprender su contenido.
+El primer paso consiste en seleccionar un documento (PDF o CSV) y procesarlos para que la aplicación pueda comprender su contenido.
 
 Los documentos pueden contener información como:
 
@@ -88,8 +88,12 @@ El proyecto deberá publicarse en un repositorio de GitHub que incluya:
 
 - Un repositorio organizado.
 - Historial de commits.
-- Código fuente completo.
-- Archivo **README.md**.
+- Archivo **README.md**, con:
+   - Una descripción de la arquitectura que montamos.
+   - Ejemplos de preguntas y respuestas que el agente puede resolver.
+   - Instrucciones para quien quiera ejecutar el proyecto.
+   - Un enlace o una captura de pantalla de la aplicación corriendo en OCI,
+     para comprobar que el deploy (implementación) realmente funcionó.
 
 ---
 

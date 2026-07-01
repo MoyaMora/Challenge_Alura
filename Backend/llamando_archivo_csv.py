@@ -1,6 +1,9 @@
 
-#Importacion de librerias:
+#Importacion de librerias.
+#Librerias para tratar y cargar archivo csv:
 import pandas as pd
+import io
+
 
 # CONFIGURACIÓN PARA TERMINAL: Fuerza a pandas a mostrar todas las columnas 
 # y extiende el ancho de las mismas, del data frame csv:
@@ -8,43 +11,34 @@ import pandas as pd
 #pd.set_option('display.width', 100)
 
 
-def preparar_reviews_csv_para_llm(ruta_csv, max_characters=2000):
-    """
-    Carga un archivo CSV de reseñas, une la columna 'reviewText'
-    y la recorta al tamaño máximo especificado para el LLM.
-    """
-    try:
-        # Cargamos el DataFrame:
-        df = pd.read_csv(ruta_csv)
-        
-        # Extraemos la columna llamada reviewText del data frame.
-        # si no esta manda un error:
-        if "reviewText" not in df.columns:
-            # error de ortografia:
-            raise KeyError("La columna 'reviewText' no existe en el archivo CSV.")
-        
-        # Guardamos solo los comentarios de la columna reviewText del data frame:    
-        columna_reviews = df["reviewText"].dropna().astype(str) # dropna() evita errores si hay celdas vacías
-        
-        # Unimos todas las reseñas del data frame con el separador ####
-        reviews_unidas = "####".join(columna_reviews)
-        
-        # Recortamos los caracteres al límite del contexto del LLM, esto por los tokens de las IAs de pago.
-        texto_recortado = reviews_unidas[:max_characters]
-        
-        # Mensajes informativos en la terminal para verificar que todo va bien
-        print(f"✅ Archivo cargado exitosamente. Total de filas: {len(df)}")
-        print(f"📊 Longitud del texto enviado al LLM: {len(texto_recortado)} caracteres.\n")
-        
-        return texto_recortado
+def preparar_reviews_csv_subido_para_llm(archivo_bytes):
 
-    # Mensaje para errores comunes:
-    except FileNotFoundError:
-        # Por si falla la ruta dada, como me paso pero se ve elegante el error:
-        print(f"❌ Error: No se encontró el archivo en la ruta: {ruta_csv}")
-        return None
-    
+    # Recibe los bytes de un archivo CSV subido por la API,
+    # extrae las reseñas de la columna 'reviewText' 
+    # y las devuelve como una lista de textos limpios 
+    # para indexar directamente en la base de datos vectorial.
+    # param archivo_bytes: Bytes del archivo cargado desde FastAPI
+    # return: List[str] con cada reseña individual, o None si falla
+
+    try:
+        # Cargamos el DataFrame directamente desde los bytes en memoria
+        df = pd.read_csv(io.BytesIO(archivo_bytes))
+
+        # Verificamos la columna mandatoria
+        if "reviewText" not in df.columns:
+            raise KeyError(
+                "La columna 'reviewText' no existe en el archivo CSV."
+            )
+
+        # Filtramos valores nulos, convertimos a string y limpiamos espacios extraños
+        columna_reviews = df["reviewText"].dropna().astype(str)
+
+        # Convertimos a una lista de reseñas individuales eliminando espacios en blanco en los extremos
+        lista_reviews = [review.strip() for review in columna_reviews if review.strip()]
+
+        print(f"CSV procesado exitosamente. Total de filas válidas: {len(lista_reviews)}")
+        return lista_reviews
+
     except Exception as e:
-        # Quien sabe que error ocurra pero me paso igual xD y lo agregamos por si acaso:
-        print(f"❌ Ocurrió un error inesperado: {e}")
+        print(f"Error al procesar el CSV subido: {e}")
         return None

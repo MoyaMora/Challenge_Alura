@@ -1,20 +1,27 @@
 import os
+
 # Libreria para la base de datos  vectorial
 import chromadb
+
 # Cargamos la libreria lel modelo de IA con la que trabajaremos
 from groq import Groq
 
+# Libreria para gestionar, validar y asegurar que los datos que entran
+#  y salen de tu API sean exactamente lo que esperas.
 from pydantic import BaseModel, Field
-# Librerias para aplicacion 
+
+# Librerias para aplicacion, subir archivos, comunicacions http:
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-# libreria para poner en fastapi texto
+
+# libreria para poner en fastapi texto en los botones de su interfaz:
 from typing import Literal
 
 
 # Importación de librerías para partir texto y generar embeddings locales
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 # Usamos un modelo de embeddings ligero de HuggingFace
 # que corre localmente sin llaves de API
 from chromadb.utils import embedding_functions
@@ -72,8 +79,8 @@ modelo_embeddings = embedding_functions.SentenceTransformerEmbeddingFunction(
 )
 
 # Creamos o recuperamos las colecciones vectoriales para cada formato
-coleccion_csv = chroma_client.get_or_create_collection(name="datos_csv", embedding_function=modelo_embeddings)
 coleccion_pdf = chroma_client.get_or_create_collection(name="datos_pdf", embedding_function=modelo_embeddings)
+coleccion_csv = chroma_client.get_or_create_collection(name="datos_csv", embedding_function=modelo_embeddings)
 
 # Configurador para dividir textos largos en fragmentos (Chunks)
 text_splitter = RecursiveCharacterTextSplitter(
@@ -82,6 +89,8 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 #--------------------------------------------------------------------------
+# Ejecutamos las funciones importadas para cargar los conocimientos
+print("Cargando base de conocimientos...")
 
 # Iniciamos con los ENDPOINTS DE CARGA (Subir archivos csv y pdf):
 @app.post("/subir-pdf", summary="Sube un archivo PDF de documentos")
@@ -114,91 +123,21 @@ async def subir_pdf(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del PDF: {e}")
 
-# Cargando la base de datos csv y pdf.
-# Definimos las rutas de los archivos en tu computadora:
-ruta_archivo_csv = "/Users/josemoya/VisualStudio/Challenge_Alura_2026/reviews_challenge.csv"
-ruta_archivo_pdf = "/Users/josemoya/VisualStudio/Challenge_Alura_2026/Política_de_Uso_de_Correo_Electrónico_y_Seguridad_de_la_Información.pdf"
+# Consulta web:
 
-# Ejecutamos las funciones importadas para cargar los conocimientos
-print("Cargando base de conocimientos...")
+class Consulta(BaseModel):
+    # Escoger base de conocimiento por el usuario;
+    fuente: Literal['pdf','csv'] = Field(description="Tipo de base de conocimiento a consultar: 'csv' o 'pdf'")
+    pregunta: str = Field(description="Escribe aquí la pregunta basada en el archivo seleccionado.")
 
-llm_input_text_csv = preparar_reviews_csv_para_llm(ruta_archivo_csv, max_characters=2000)
-llm_input_text_pdf = preparar_pdf_para_llm(ruta_archivo_pdf,max_characters=2000)
-
-
-
-# Haciendo el chat box para que responda de forma automática:
-print("¡Bienvenido al Chatbot Inteligente!")
-print("Puedes preguntar sobre las reseñas de productos (CSV) o sobre el contenido del PDF.")
-print("Escribe 'csv' para preguntar sobre el CSV, 'pdf' para preguntar sobre el PDF, o 'salir' para terminar.")
-
-# Ciclo infinito:
-while True:
-
-    # Preguntando por las opciones que se tiene:
-    Eleccion = input("\n¿Qué base de conocimiento quieres usar (csv/pdf/salir)? ").lower()
-
-    # Salimos del programa:
-    if Eleccion == 'salir':
-        print("¡Hasta luego!")
-        break
-    
-    # Escogio el archivo csv:
-    elif Eleccion == 'csv':
-        if not llm_input_text_csv:
-            print("No hay texto del CSV disponible para consultar. Asegúrate de que el CSV fue procesado correctamente.")
-            continue
-        
-        pregunta_usuario = input("Pregunta sobre las reseñas: ")
-        
-       # Dando el RAG al LLM para el CSV
-        contenido_completo = f"He aquí un conjunto de reseñas de productos, separadas por '####':\n\n{llm_input_text_csv}\n\nBasado en estas reseñas, {pregunta_usuario}"
-        system_prompt = """Eres un asistente experto en análisis de sentimientos de productos. " \
-                        "Responde a la pregunta del usuario basándote únicamente en el texto de las reseñas proporcionadas.
-                        Si hay informacion en ingles traduzcala a español para que el usuario entienda."""
-    
-    # Escogiendo el archivo pdf:
-    elif Eleccion == 'pdf':
-        # Validamos si hay información dentro del PDF:
-        if not llm_input_text_pdf:
-            print("❌ No hay texto del PDF disponible para consultar. Asegúrate de que el archivo existe y pypdf pudo leerlo.")
-            continue
-            
-        # Si hay, capturamos la duda existencial sobre el PDF:
-        pregunta_usuario = input("Pregunta sobre el documento PDF: ")
-        
-        # Dando el RAG al LLM para el PDF
-        contenido_completo = f"A continuación se te proporciona el contenido extraído del documento PDF:\n\n{llm_input_text_pdf}\n\nBasado estrictamente en este texto, responde a la siguiente consulta: {pregunta_usuario}"
-        
-        # Cambiamos las instrucciones del sistema para que se comporte como un lector de PDFs espirituales/técnicos
-        system_prompt = """Eres un asistente experto en comprensión lectora y análisis de documentos, 
-                        experto tambien en el area de un juego de cartas llamado pokemon." \
-                        " Tu objetivo es responder las preguntas del usuario utilizando única y
-                        exclusivamente la información proveída del PDF. 
-                        Si la respuesta no se encuentra en el texto,indícalo amablemente.
-                        Si hay informacion en inglés, traduzca a español para que el usuario entienda."""
-
-    # Si no escogio ningun archivo csv o salir, mostrar:
-    else:
-        print("Opción no válida. Por favor, elige 'csv', 'pdf' o 'salir'.")
-        continue
-
-    # Ya existen las variables para el modelo, procedemos a llamar a la API de groq:
-    try:
-        # Creando instancia cliente groq: 
-        client = Groq() 
-
-        response = client.chat.completions.create(
-            model="llama-3.1-8b-instant", 
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": contenido_completo}
-            ]
-        )
-        # Imprimimos la respuesta del modelo groq:
-        print("\n🤖 Respuesta del LLM:")
-        print(response.choices[0].message.content)
-    
-    except Exception as e:
-        print(f"Ocurrió un error al comunicarse con el LLM: {e}")
-        print("Por favor, asegúrate de que tu clave de API sea válida y de que no hayas excedido las cuotas.")
+# Endpoint de obtener datos:
+@app.get("/")
+def inicio():
+    # obtencion de datos de cualquiera de los archivos seleccionados:
+    conteo_csv = coleccion_csv.count()
+    conteo_pdf = coleccion_pdf.count()
+    return {
+        "mensaje": "¡Bienvenido, Hazle preguntas al Agente Inteligente con RAG!",
+        "estado_csv": f"Listo ({conteo_csv} fragmentos cargados)" if conteo_csv > 0 else "No cargado.",
+        "estado_pdf": f"Listo ({conteo_pdf} fragmentos cargados)" if conteo_pdf > 0 else "No cargado.",
+    }

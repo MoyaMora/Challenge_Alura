@@ -167,67 +167,68 @@ def consultar_agente(consulta: Consulta):
             raise HTTPException(status_code=400,
                                 detail="No hay datos de PDF indexados. Usa /subir-pdf primero.")
 
-    # Recuperando (15 en este caso) Fragmentos lo más similar posible a la pregunta del usuario.
-    resultados_busqueda = coleccion_pdf.query(
+        # Recuperando (15 en este caso) Fragmentos lo más similar posible a la pregunta del usuario.
+        resultados_busqueda = coleccion_pdf.query(
             
-    # La base de datos vectorial toma la pregunta,
-    # la convierte automáticamente en números (un embedding o vector)
-    # para poder comparar matemáticamente su significado
-    # con los fragmentos de texto que ya tengo guardados.
-    query_texts=[pregunta_usuario],
-    # Evitando que la base de conocimiento sea muy pequeña y de error:
-    # Si se obtienen menos fragmentos, me da la cantidad minima. (15,5) daria 5 fragmentos. 
-    n_results=min(15, coleccion_pdf.count())
-    )
+        # La base de datos vectorial toma la pregunta,
+        # la convierte automáticamente en números (un embedding o vector)
+        # para poder comparar matemáticamente su significado
+        # con los fragmentos de texto que ya tengo guardados.
+        query_texts=[pregunta_usuario],
+        # Evitando que la base de conocimiento sea muy pequeña y de error:
+        # Si se obtienen menos fragmentos, me da la cantidad minima. (15,5) daria 5 fragmentos. 
+        n_results=min(15, coleccion_pdf.count())
+        )
 
-    # Evitando que el documento contenga poca informacion o imagenes:
-    docs = resultados_busqueda.get("documents") or []
-    if len(docs) == 0 or len(docs[0]) == 0:
-        raise HTTPException(
-            status_code=400,
-            detail="No se encontraron resultados relevantes en la base de datos."
+        # Evitando que el documento contenga poca informacion o imagenes:
+        docs = resultados_busqueda.get("documents") or []
+        if len(docs) == 0 or len(docs[0]) == 0:
+            raise HTTPException(
+                status_code=400,
+                detail="No se encontraron resultados relevantes en la base de datos."
             )
 
-    contexto_recuperado = "\n---\n".join(docs[0])
+        contexto_recuperado = "\n---\n".join(docs[0])
 
-    # Dandole personalidad al modelo de IA:
-    system_prompt = "Eres un asistente experto en comprensión lectora. " \
-                    "Responde a la pregunta utilizando estrictamente los fragmentos" \
-                    "del documento adjunto."
+        # Dandole personalidad al modelo de IA:
+        system_prompt = "Eres un asistente experto en comprensión lectora. " \
+                        "Responde a la pregunta utilizando estrictamente los fragmentos" \
+                        "del documento adjunto."
     
-    contenido_completo = f"""Contexto del documento recuperado de la base 
+        contenido_completo = f"""Contexto del documento recuperado de la base 
                          de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"""
     
     #Aqui va la eleccion del archivo csv
     #
-    if eleccion == "csv":
+    elif eleccion == "csv":
+        
         if coleccion_csv.count() == 0:
             raise HTTPException(status_code=400,
                                  detail="No hay datos de CSV indexados. Usa /subir-csv primero."
             )
 
-    # Recuperamos los 15 fragmentos más similares a la pregunta del usuario
-    resultados_busqueda = coleccion_csv.query(
-        query_texts=[pregunta_usuario],
-        n_results=min(15, coleccion_csv.count())
-    )
+        # Recuperamos los 15 fragmentos más similares a la pregunta del usuario
+        resultados_busqueda = coleccion_csv.query(
+            query_texts=[pregunta_usuario],
+            n_results=min(15, coleccion_csv.count())
+        )
 
-    # Evitando que el documento contenga poca informacion o imagenes:
-    docs = resultados_busqueda.get("documents") or []
-    if len(docs) == 0 or len(docs[0]) == 0:
-        raise HTTPException(
-            status_code=400,
-            detail="No se encontraron resultados relevantes en la base de datos."
+        # Evitando que el documento contenga poca informacion o imagenes:
+        docs = resultados_busqueda.get("documents") or []
+        if len(docs) == 0 or len(docs[0]) == 0:
+            raise HTTPException(
+                status_code=400,
+                detail="No se encontraron resultados relevantes en la base de datos."
             )
 
-    contexto_recuperado = "\n---\n".join(docs[0])
+        contexto_recuperado = "\n---\n".join(docs[0])
 
-    # Dandole personalidad al modelo de IA:
-    system_prompt = """ Eres un asistente experto en análisis de sentimientos y compresion lectora.
+        # Dandole personalidad al modelo de IA:
+        system_prompt = """ Eres un asistente experto en análisis de sentimientos y compresion lectora.
                          Responde a la pregunta basándote únicamente en los fragmentos del documneto
                          provisto."""
     
-    contenido_completo = f"Contexto de reseñas recuperado de la base de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"
+        contenido_completo = f"Contexto de reseñas recuperado de la base de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"
     
     
     #

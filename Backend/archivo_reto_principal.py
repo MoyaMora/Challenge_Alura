@@ -72,7 +72,7 @@ async def subir_pdf(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="El archivo debe ser un formato .pdf válido")
 
     try:
-         # Subiendo el archivo pdf seleccionado:
+         # Subiendo el archivo pdf seleccionado y se junta el texto:
         texto_completo = preparar_pdf_subido_para_llm(file.file)
 
         if not texto_completo:
@@ -180,14 +180,16 @@ def consultar_agente(consulta: Consulta):
         n_results=min(15, coleccion_pdf.count())
         )
 
-        # Evitando que el documento contenga poca informacion o imagenes:
+        # Obteniendo la informacion mas relevante de la base de datos:
         docs = resultados_busqueda.get("documents") or []
+
+        # Evitando que el documento contenga poca informacion o imagenes o este vacio:
         if len(docs) == 0 or len(docs[0]) == 0:
             raise HTTPException(
                 status_code=400,
                 detail="No se encontraron resultados relevantes en la base de datos."
             )
-
+        # Unimos todo el texto relevante:
         contexto_recuperado = "\n---\n".join(docs[0])
 
         # Dandole personalidad al modelo de IA:
@@ -213,14 +215,16 @@ def consultar_agente(consulta: Consulta):
             n_results=min(15, coleccion_csv.count())
         )
 
-        # Evitando que el documento contenga poca informacion o imagenes:
+        # Obtencion de la informacion:
         docs = resultados_busqueda.get("documents") or []
+
+        # Evitando que el documento contenga poca informacion o imagenes:
         if len(docs) == 0 or len(docs[0]) == 0:
             raise HTTPException(
                 status_code=400,
                 detail="No se encontraron resultados relevantes en la base de datos."
             )
-
+        # Juntando toda la información,
         contexto_recuperado = "\n---\n".join(docs[0])
 
         # Dandole personalidad al modelo de IA:
@@ -238,6 +242,7 @@ def consultar_agente(consulta: Consulta):
         # No se olvide subir la api key de groq al archivo .env
         client = Groq()
         response = client.chat.completions.create(
+            # Modelo usado, puede ser otro.
             model="llama-3.1-8b-instant",
             messages=[
                 {"role": "system",

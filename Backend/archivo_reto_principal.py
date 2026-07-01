@@ -193,7 +193,7 @@ def consultar_agente(consulta: Consulta):
     contenido_completo = f"""Contexto del documento recuperado de la base 
                          de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"""
     
-    #
+    #Aqui va la eleccion del archivo csv
     #
     # Usando la IA modelo Groq:
 
@@ -215,7 +215,7 @@ def consultar_agente(consulta: Consulta):
             "pregunta": pregunta_usuario,
             "respuesta_agente": response.choices[0].message.content,
             # Agregamos los fragmentos reales utilizados para que el usuario verifique la fuente
-            # "contexto_utilizado_rag": resultados_busqueda["documents"][0]
+            "Contexto_Utilizado_Por_El_RAG": resultados_busqueda["documents"][0]
         }
     # Mandando mensaje de error:
     except Exception as e:

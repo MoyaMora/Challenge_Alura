@@ -39,7 +39,7 @@ load_dotenv()
 
 # Importo mis librerias creadas para proesar y cargar datos de:
 # csv y pdf.
-from llamando_archivo_csv import preparar_reviews_csv_para_llm
+from llamando_archivo_csv import preparar_reviews_csv_subido_para_llm
 from llamando_archivo_pdf import preparar_pdf_subido_para_llm
 
 # Iniciando la creación de la aplicacion con fastapi:
@@ -91,10 +91,11 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 #--------------------------------------------------------------------------
+# Iniciamos con los ENDPOINTS DE CARGA DE ARCHIVOS PDF Y CSV.
 # Ejecutamos las funciones importadas para cargar los conocimientos
 print("Cargando base de conocimientos...")
 
-# Iniciamos con los ENDPOINTS DE CARGA (Subir archivos csv y pdf):
+# Endpoint de carga de archivo pdf:
 @app.post("/subir-pdf", summary="Sube un archivo PDF de documentos")
 # Asegurandose que se sube un archivo pdf:
 async def subir_pdf(file: UploadFile = File(...)):
@@ -127,6 +128,41 @@ async def subir_pdf(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del PDF: {e}")
 
+# Endpoint para subir postear el archivo csv:
+
+# Subir archivo csv:
+@app.post("/subir-csv", summary="Sube un archivo CSV de reseñas")
+# Aqui sube el archivo convertido a datos entre 0 y 1 por que pasa por la base vectorial
+async def subir_csv(file: UploadFile = File(...)):
+    #Verificamos si es el formato que se espera, en este caso csv.
+    if not file.filename.endswith(".csv"):
+        raise HTTPException(status_code=400,detail="El archivo debe ser un formato .csv válido")
+
+    try:
+        contenido_bytes = await file.read()
+        # Ahora obtenemos una lista de reseñas directamente
+        lista_de_reseñas = preparar_reviews_csv_subido_para_llm(contenido_bytes)
+
+        if not lista_de_reseñas:
+            raise HTTPException(status_code=400, detail="No se pudo procesar el archivo CSV o estaba vacío.")
+
+        # Limpiar registros anteriores de la colección para evitar mezclar archivos
+        ids_existentes = coleccion_csv.get()["ids"]
+        if ids_existentes:
+            coleccion_csv.delete(ids=ids_existentes)
+
+        # RAG: Almacenamos cada reseña de la lista de forma independiente
+        coleccion_csv.add(
+            documents=lista_de_reseñas,
+            ids=[f"csv_row_{i}" for i in range(len(lista_de_reseñas))]
+        )
+
+        return {"mensaje": f"✅ CSV '{file.filename}' indexado. {len(lista_de_reseñas)} reseñas listas de forma individual."}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al procesar la subida del CSV: {e}")
+
+#---------------------------------------------------------------------------------------
 # Consulta web:
 
 class Consulta(BaseModel):

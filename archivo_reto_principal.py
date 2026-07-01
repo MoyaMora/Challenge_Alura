@@ -1,3 +1,4 @@
+# Libreria para poder cargar la api_key del archivo -> .env
 import os
 
 # Libreria para la base de datos  vectorial
@@ -7,7 +8,7 @@ import chromadb
 from groq import Groq
 
 # Libreria para gestionar, validar y asegurar que los datos que entran
-#  y salen de tu API sean exactamente lo que esperas.
+# y salen de la API sean exactamente lo que esperas.
 from pydantic import BaseModel, Field
 
 # Librerias para aplicacion, subir archivos, comunicacions http:
@@ -78,7 +79,8 @@ modelo_embeddings = embedding_functions.SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2" # Ó el modelo que se quiera utilizar.
 )
 
-# Creamos o recuperamos las colecciones vectoriales para cada formato
+# Fragmentos guardados del archivo pdf o csv:
+# Creamos o recuperamos las colecciones vectoriales para cada formato.
 coleccion_pdf = chroma_client.get_or_create_collection(name="datos_pdf", embedding_function=modelo_embeddings)
 coleccion_csv = chroma_client.get_or_create_collection(name="datos_csv", embedding_function=modelo_embeddings)
 
@@ -94,11 +96,13 @@ print("Cargando base de conocimientos...")
 
 # Iniciamos con los ENDPOINTS DE CARGA (Subir archivos csv y pdf):
 @app.post("/subir-pdf", summary="Sube un archivo PDF de documentos")
+# Asegurandose que se sube un archivo pdf:
 async def subir_pdf(file: UploadFile = File(...)):
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="El archivo debe ser un formato .pdf válido")
 
     try:
+         # Subiendo el archivo pdf seleccionado:
         texto_completo = preparar_pdf_para_llm(file.file)
 
         if not texto_completo:
@@ -107,12 +111,12 @@ async def subir_pdf(file: UploadFile = File(...)):
         # RAG: Fragmentar el texto e indexarlo en la base vectorial
         chunks = text_splitter.split_text(texto_completo)
 
-        # Limpiar registros anteriores
+        # Limpiar registros anteriores para evitar confuciones de archivos pdf subidos:
         ids_existentes = coleccion_pdf.get()["ids"]
         if ids_existentes:
             coleccion_pdf.delete(ids=ids_existentes)
 
-        # Insertar los nuevos vectores
+        # Insertar los nuevos vectores (Los fragmentos guardados):
         coleccion_pdf.add(
             documents=chunks,
             ids=[f"pdf_chunk_{i}" for i in range(len(chunks))]
@@ -141,3 +145,80 @@ def inicio():
         "estado_csv": f"Listo ({conteo_csv} fragmentos cargados)" if conteo_csv > 0 else "No cargado.",
         "estado_pdf": f"Listo ({conteo_pdf} fragmentos cargados)" if conteo_pdf > 0 else "No cargado.",
     }
+
+# Endpoint de postear datos:
+
+@app.post("/preguntar")
+def consultar_agente(consulta: Consulta):
+    # Asegurando la eleccion sea de forma correcta
+    # Si escribe en mayusculas o minisculas da igual.
+    eleccion = consulta.fuente.lower()
+    pregunta_usuario = consulta.pregunta
+
+    # Recuperacion de la información del archivo pdf.
+    # Verificando si se subio el archivo pdf:
+    if eleccion == "pdf":
+        if coleccion_pdf.count() == 0:
+            raise HTTPException(status_code=400,
+                                detail="No hay datos de PDF indexados. Usa /subir-pdf primero.")
+
+    # Recuperando (15 en este caso) Fragmentos lo más similar posible a la pregunta del usuario.
+    resultados_busqueda = coleccion_pdf.query(
+            
+    # La base de datos vectorial toma la pregunta,
+    # la convierte automáticamente en números (un embedding o vector)
+    # para poder comparar matemáticamente su significado
+    # con los fragmentos de texto que ya tengo guardados.
+    query_texts=[pregunta_usuario],
+    # Evitando que la base de conocimiento sea muy pequeña y de error:
+    # Si se obtienen menos fragmentos, me da la cantidad minima. (15,5) daria 5 fragmentos. 
+    n_results=min(15, coleccion_pdf.count())
+    )
+
+    # Evitando que el documento contenga poca informacion o imagenes:
+    docs = resultados_busqueda.get("documents") or []
+    if len(docs) == 0 or len(docs[0]) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="No se encontraron resultados relevantes en la base de datos."
+            )
+
+    contexto_recuperado = "\n---\n".join(docs[0])
+
+    # Dandole personalidad al modelo de IA:
+    system_prompt = "Eres un asistente experto en comprensión lectora. " \
+                    "Responde a la pregunta utilizando estrictamente los fragmentos" \
+                    "del documento adjunto."
+    
+    contenido_completo = f"""Contexto del documento recuperado de la base 
+                         de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"""
+
+
+# Usando la IA modelo Groq:
+try:
+    # No se olvide subir la api key de groq al archivo .env
+    client = Groq()
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "system",
+            "content": system_prompt},
+            
+            {"role": "user",
+            "content": contenido_completo},
+            ],
+            temperature=0.2 # Temperatura baja para asegurar que se apegue al contexto recuperado
+    )
+    return{
+        "fuente_utilizada": eleccion,
+        "pregunta": pregunta_usuario,
+        "respuesta_agente": response.choices[0].message.content,
+        # Agregamos los fragmentos reales utilizados para que el usuario verifique la fuente
+        "contexto_utilizado_rag": resultados_busqueda["documents"][0]
+        }
+# Mandando mensaje de error:
+except Exception as e:
+    raise HTTPException(status_code=500, detail=f"Ocurrió un error con la LLModel: {e}")
+
+
+

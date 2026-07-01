@@ -200,6 +200,37 @@ def consultar_agente(consulta: Consulta):
     
     #Aqui va la eleccion del archivo csv
     #
+    if eleccion == "csv":
+        if coleccion_csv.count() == 0:
+            raise HTTPException(status_code=400,
+                                 detail="No hay datos de CSV indexados. Usa /subir-csv primero."
+            )
+
+    # Recuperamos los 15 fragmentos más similares a la pregunta del usuario
+    resultados_busqueda = coleccion_csv.query(
+        query_texts=[pregunta_usuario],
+        n_results=min(15, coleccion_csv.count())
+    )
+
+    # Evitando que el documento contenga poca informacion o imagenes:
+    docs = resultados_busqueda.get("documents") or []
+    if len(docs) == 0 or len(docs[0]) == 0:
+        raise HTTPException(
+            status_code=400,
+            detail="No se encontraron resultados relevantes en la base de datos."
+            )
+
+    contexto_recuperado = "\n---\n".join(docs[0])
+
+    # Dandole personalidad al modelo de IA:
+    system_prompt = """ Eres un asistente experto en análisis de sentimientos y compresion lectora.
+                         Responde a la pregunta basándote únicamente en los fragmentos del documneto
+                         provisto."""
+    
+    contenido_completo = f"Contexto de reseñas recuperado de la base de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"
+    
+    
+    #
     # Usando la IA modelo Groq:
 
     try:

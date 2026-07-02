@@ -308,9 +308,42 @@ El producto más vendido fue...
 
 ---
 
-## 3. Instrucciones de instalación
+## 3. Instrucciones de instalación Evidencia del funcionamiento del proyecto:
 
-Explicar cómo ejecutar el proyecto localmente.
+Pasos para ejecutar el backend localmente: 
+
+**Nota importante:** Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione.
+Observa que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
+solo; Ejecuta el siguiente comando en la terminal del visual stuido code:
+
+```bash
+uvicorn archivo_reto_principal:app --reload
+```
+Una vez hecho esto y todo este bien en tú terminal verás esto al final:
+
+<p align="center">
+    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Abre tú navegador, copia esta direccion y pegala:
+```
+http://localhost:8000/docs
+```
+
+Encontrarás una interfaz interactiva donde puedes:
+
+- Probar todos los endpoints. 
+- Enviar archivos. 
+- Hacer preguntas. 
+- Ver las respuestas. 
+- Consultar los modelos de datos.
+
+La interfaz saldra como se muestra en la imagen de abajo y los botones a usar son los que estan en un **recuadro verde y dicen POST**, 
+le das clip a la pestaña donde esta marcada con una flecha azul para desplegar informacion a usar:
+
+<p align="center">
+    <img src="Imagenes_Readme/2.png" width="70%" alt="Documentación de FastAPI">
+</p>
 
 ---
 
@@ -329,26 +362,9 @@ Se ve mucho más profesional.
 ---
 
 
-## Pasos para ejecutar el backend localmente: 
-
-# Nota importante: Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione.
-Observa que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
-solo; Ejecuta el siguiente comando en la terminal del visual stuido code:
-
-```bash
-uvicorn archivo_reto_principal:app --reload
-```
-Una vez hecho esto y todo este bien en tú terminal verás esto al final:
-
-<p align="center">
-    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
-</p>
 
 
-Abre:
-```
-http://localhost:8000/docs
-```
+
 
 La interfaz de Swagger permite probar todos los endpoints de la API.
 
@@ -359,8 +375,6 @@ Ejecuta:
 ```bash
 uvicorn archivo_reto_principal:app --reload
 ```
-
-Abre:
 
 ```text
 http://localhost:8000/docs

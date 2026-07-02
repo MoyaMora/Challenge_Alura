@@ -318,11 +318,11 @@ Pasos para ejecutar el backend localmente:
     <img src="Imagenes_Readme/ruta1.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-**Observa** que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
-solo; Ejecuta el siguiente comando en la terminal del visual stuido code:
+**Observa** que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py; 
+Solo Ejecuta el siguiente comando en la terminal del visual stuido code:
 
 ```bash
-uvicorn archivo_reto_principal:app --reload
+uvicorn mi_proyecto:app --reload
 ```
 Una vez hecho esto y todo este bien en tú terminal verás esto al final:
 

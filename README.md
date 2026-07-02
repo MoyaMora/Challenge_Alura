@@ -331,10 +331,9 @@ Se ve mucho más profesional.
 
 ## Pasos para ejecutar el backend localmente: 
 
-Nota importante: Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione, y en la terminal colocas:
-
-Nota que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
-solo; Ejecuta en la terminal del visual stuido code:
+# Nota importante: Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione.
+Observa que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
+solo; Ejecuta el siguiente comando en la terminal del visual stuido code:
 
 ```bash
 uvicorn archivo_reto_principal:app --reload
@@ -347,8 +346,9 @@ Una vez hecho esto y todo este bien en tú terminal verás esto al final:
 
 
 Abre:
-
+```
 http://localhost:8000/docs
+```
 
 La interfaz de Swagger permite probar todos los endpoints de la API.
 

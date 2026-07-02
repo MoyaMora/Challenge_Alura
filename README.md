@@ -315,7 +315,7 @@ Pasos para ejecutar el backend localmente:
 **Nota importante:** Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione, en mi caso la ruta, indica que me encuentro en la carpeta Backend, que es donde se encuentra mi_proyecto.py.
 
 <p align="center">
-    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
+    <img src="Imagenes_Readme/ruta1.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
 **Observa** que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 

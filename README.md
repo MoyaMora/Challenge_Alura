@@ -105,6 +105,191 @@ El README deberá incluir:
 
 Explicar cómo está construida la solución.
 
+# 🧠 Arquitectura RAG (Retrieval-Augmented Generation)
+
+Este proyecto implementa la arquitectura **RAG (Retrieval-Augmented Generation)**, una técnica que permite complementar el conocimiento de un Modelo de Lenguaje (LLM) con información proveniente de documentos privados, logrando respuestas precisas y basadas en datos reales.
+
+El flujo de funcionamiento del sistema se divide en tres etapas principales.
+
+---
+
+## 1. 📥 Fase de Ingesta (Preparación del conocimiento)
+
+Un Modelo de Lenguaje como **Llama 3** no conoce el contenido de documentos privados de una empresa. Por ello, antes de responder preguntas, el sistema debe procesar e indexar la información.
+
+Esta etapa se ejecuta mediante los endpoints **`/subir-pdf`** y **`/subir-csv`**, e incluye los siguientes procesos:
+
+### Extracción del contenido
+
+El sistema obtiene el texto del documento utilizando funciones especializadas:
+
+* `preparar_pdf_subido_para_llm()` para documentos PDF.
+* `preparar_reviews_csv_subido_para_llm()` para archivos CSV.
+
+---
+
+### Fragmentación (Chunking)
+
+Posteriormente, el contenido se divide en pequeños fragmentos utilizando:
+
+```python
+RecursiveCharacterTextSplitter
+```
+
+La fragmentación es una parte fundamental de la arquitectura RAG, ya que los Modelos de Lenguaje poseen un límite en la cantidad de información que pueden procesar simultáneamente.
+
+En este proyecto cada fragmento contiene aproximadamente **700 caracteres**, con un solapamiento de **100 caracteres**, lo que permite conservar el contexto entre fragmentos consecutivos.
+
+---
+
+### Vectorización y almacenamiento
+
+Cada fragmento se transforma en un **embedding** mediante el modelo:
+
+```
+all-MiniLM-L6-v2
+```
+
+Los embeddings representan matemáticamente el significado semántico del texto y posteriormente son almacenados en una base de datos vectorial utilizando **ChromaDB**.
+
+De esta manera, el conocimiento queda preparado para realizar búsquedas semánticas de alta velocidad.
+
+---
+
+# 🔎 2. Fase de Recuperación (Retrieval)
+
+Cuando el usuario realiza una consulta mediante el endpoint **`/preguntar`**, el sistema no envía el documento completo al modelo de IA.
+
+En su lugar, realiza una búsqueda semántica sobre la base vectorial mediante:
+
+```python
+coleccion_activa.query(...)
+```
+
+Durante este proceso:
+
+* La pregunta del usuario se convierte automáticamente en un embedding.
+* ChromaDB compara dicho embedding con todos los fragmentos almacenados.
+* Se recuperan únicamente los fragmentos cuyo significado sea más similar a la pregunta.
+
+En esta implementación se recuperan hasta **15 fragmentos relevantes**, reduciendo significativamente la cantidad de información enviada al modelo y mejorando tanto la velocidad como la precisión de las respuestas.
+
+---
+
+# 🤖 3. Fase de Aumento y Generación (Augmentation & Generation)
+
+Una vez recuperados los fragmentos más relevantes, el sistema construye un contexto enriquecido que será enviado al Modelo de Lenguaje.
+
+Este proceso se realiza mediante la variable:
+
+```python
+contenido_completo
+```
+
+Su estructura es similar a la siguiente:
+
+```text
+Contexto recuperado del documento
+
+[Fragmentos encontrados por ChromaDB]
+
+Pregunta del usuario
+```
+
+Finalmente, este contexto es enviado al modelo **Llama 3.1 8B Instant** ejecutado mediante la API de **Groq**.
+
+El Modelo de Lenguaje genera la respuesta utilizando exclusivamente la información recuperada desde la base vectorial, evitando inventar información que no exista en los documentos proporcionados.
+
+---
+
+# 🤖 ¿Por qué este proyecto también es un Agente de IA?
+
+Aunque el sistema utiliza la arquitectura RAG, también puede considerarse un **Agente de Inteligencia Artificial**, ya que posee capacidades adicionales que van más allá de una simple conversación con un LLM.
+
+## 1. Tiene un objetivo claramente definido
+
+Mediante el **System Prompt**, el modelo recibe una identidad y un conjunto de reglas que delimitan su comportamiento.
+
+Por ejemplo:
+
+> "Eres un asistente experto en comprensión lectora. Responde utilizando estrictamente los fragmentos del documento recuperado."
+
+Esto evita respuestas fuera del contexto del documento y mejora la confiabilidad de la información generada.
+
+---
+
+## 2. Utiliza herramientas externas
+
+El agente no depende únicamente del conocimiento interno del Modelo de Lenguaje.
+
+Puede interactuar con diferentes herramientas implementadas en la aplicación, tales como:
+
+* ChromaDB para realizar búsquedas semánticas.
+* Procesadores especializados para archivos PDF y CSV.
+* Modelos de embeddings para transformar texto en vectores.
+* Selección automática de la base de conocimiento según el tipo de documento consultado.
+
+Estas herramientas amplían considerablemente sus capacidades.
+
+---
+
+## 3. Toma decisiones de manera autónoma
+
+Antes de responder una pregunta, el sistema valida el estado de la aplicación.
+
+Por ejemplo:
+
+* Verifica si existe un documento previamente indexado.
+* Determina si la consulta corresponde a un PDF o a un CSV.
+* Impide consultas cuando no existe una base de conocimiento cargada.
+* Devuelve mensajes de error descriptivos (`HTTP 400`) cuando el usuario intenta realizar una operación inválida.
+
+Estas decisiones permiten proteger la API y garantizar un funcionamiento consistente.
+
+---
+
+# 📌 Resumen del flujo RAG
+
+```text
+Usuario
+      │
+      ▼
+Sube un PDF o CSV
+      │
+      ▼
+Extracción del contenido
+      │
+      ▼
+Fragmentación (Chunks)
+      │
+      ▼
+Embeddings
+      │
+      ▼
+ChromaDB (Base Vectorial)
+      │
+      ▼
+Pregunta del usuario
+      │
+      ▼
+Búsqueda semántica
+      │
+      ▼
+Recuperación de fragmentos relevantes
+      │
+      ▼
+Construcción del contexto
+      │
+      ▼
+Groq + Llama 3.1
+      │
+      ▼
+Respuesta en lenguaje natural
+```
+
+Esta arquitectura permite que el agente responda preguntas sobre documentos privados de manera rápida, precisa y fundamentada, combinando las capacidades de búsqueda semántica de **ChromaDB** con el poder de generación de lenguaje de **Llama 3.1**, implementando una solución moderna basada en **Retrieval-Augmented Generation (RAG)**.
+
+
 ---
 
 ## 2. Ejemplos de uso

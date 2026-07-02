@@ -411,6 +411,14 @@ Para salir de la interfaz de Fastapi, en la página web abierta solo la cerramos
     <img src="Imagenes_Readme/12.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
+### Probando ahora con el archivo CSV:
+
+Para probar el archivo csv y preguntar, se realiza el mismo procedimiento como lo realizamos anteriormente pero en sus respectivos POST:
+- POST /subir - csv
+- POST / preguntar
+
+para ver los resultados que se obtuvieron anteriormente.
+
 ---
 
 ## 4. Evidencia del despliegue

@@ -333,7 +333,7 @@ Se ve mucho más profesional.
 En lugar de llamarlas
 
 ```text
-imagen1.png
+1.png
 imagen2.png
 
 ## 📸 Paso 1 — Abrir la documentación
@@ -346,6 +346,6 @@ uvicorn archivo_reto_principal:app --reload
 Abre:
 
 http://localhost:8000/docs
-<p align="center"> <img src="assets/images/01_swagger.png" width="900"> </p>
+<p align="center"> <img src="assets/images/1.png" width="900"> </p>
 
 La interfaz de Swagger permite probar todos los endpoints de la API.

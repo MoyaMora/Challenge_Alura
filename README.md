@@ -329,12 +329,22 @@ Se ve mucho más profesional.
 ---
 
 
-## 📸 Paso 1 — Abrir la documentación
+## Pasos para ejecutar el backend localmente: 
 
-Ejecuta:
+Nota importante: Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione, y en la terminal colocas:
+
+Nota que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py, 
+solo; Ejecuta en la terminal del visual stuido code:
 
 ```bash
 uvicorn archivo_reto_principal:app --reload
+```
+Una vez hecho esto y todo este bien en tú terminal verás esto al final:
+
+<p align="center">
+    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
 
 Abre:
 
@@ -356,8 +366,6 @@ Abre:
 http://localhost:8000/docs
 ```
 
-<p align="center">
-    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
-</p>
+
 
 La interfaz de Swagger permite probar todos los endpoints de la API.

@@ -308,29 +308,34 @@ El producto más vendido fue...
 
 ---
 
-## 3. Instrucciones de instalación Evidencia del funcionamiento del proyecto:
+## 3. Instrucciones de ejecución y Evidencia del funcionamiento del proyecto:
+
+### Intrucciones para ejecutar el ***Backend (Fastapi)***
+
 
 Pasos para ejecutar el backend localmente: 
 
-**Nota importante:** Debes estar en la ruta de ubicación donde se encuentra tú archivo que trabajas con fastapi para que funcione, en mi caso la ruta, indica que me encuentro en la carpeta Backend, que es donde se encuentra mi_proyecto.py.
+**Nota importante:** Debes estar en la ruta de ubicación donde se encuentra tú archivo de trabajo con el que usas fastapi, en mi caso la ruta de trabajo indica que me encuentro en la carpeta Backend, y es donde se encuentra **mi_proyecto.py**:
 
 <p align="center">
     <img src="Imagenes_Readme/ruta1.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-**Observa** que tú archivo donde estes trabajando mi_proyecto.py, no va la extensión del .py; 
-Solo Ejecuta el siguiente comando en la terminal del visual stuido code:
+**Observa** que tú archivo en este caso **mi_proyecto.py**, no debe ir la extensión del .py para ejecutarlo, en esta ocasión 
+**Solo Ejecuta el siguiente comando en la terminal**:
 
 ```bash
 uvicorn mi_proyecto:app --reload
 ```
-Una vez hecho esto y todo este bien en tú terminal verás esto al final:
+Una vez hecho esto en tú terminal verás esto al final:
 
 <p align="center">
     <img src="Imagenes_Readme/2.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Abre tú navegador, copia esta direccion y pegala:
+Esto quiere decir que todo marcha bien, y es momento de abrirlo en tú navegador,
+copia esta direccion y pegala en el navegador de tú confianza:
+
 ```
 http://localhost:8000/docs
 ```
@@ -343,26 +348,26 @@ Encontrarás una interfaz interactiva donde puedes:
 - Ver las respuestas. 
 - Consultar los modelos de datos.
 
-La interfaz saldra como se muestra en la imagen de abajo y los botones a usar son los que estan en un **recuadro verde y dicen POST**, 
-le das clip a la pestaña donde esta marcada con una flecha azul para desplegar informacion a usar:
+La interfaz saldrá como se muestra en la imagen de abajo y los botones a usar son los que estan en un **recuadro verde y dicen POST**, 
+le das clip a la pestaña donde esta marcada con una flecha azul para desplegar la información a usar:
 
 <p align="center">
     <img src="Imagenes_Readme/3.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Una vez dada a la pestaña selecionada; Se desplegará un boton que dira **Try it out**, y a su vez se desplegará otro menu.
+Una vez dandole clic a la pestaña selecionada; Se desplegará un boton que dira **Try it out**, y a su vez se desplegará otro menú.
 
 <p align="center">
     <img src="Imagenes_Readme/4.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Una vez presionando el boton de **Try it out**, Puedes observar como cambio un poco la interfaz, perimitiendote subir tú archivo pdf (el que tú desees), dándole clip en la barra que dice **seleccionar archivo** y posteriormente al **boton tipo barra en azul que dice Execute** para que se ejecute el proceso (las flechas azules grandes indican la posicion de los botones a presionar).
+Una vez dándole clic a el boton de **Try it out**; Puedes observar como cambio la interfaz, perimitiendote subir tú archivo pdf (el que tú desees), dándole clic en la barra que dice **seleccionar archivo** y posteriormente al **boton tipo barra en azul que dice Execute** para que se ejecute el proceso (las flechas azules grandes indican la posición de los botones a presionar).
 
 <p align="center">
     <img src="Imagenes_Readme/5.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Una vez subido nuestro archvio pdf y presionando el boton **Execute**, cambiara ligeramente la interfaz, y puedes observar que manda un mensaje al final; El nombre del archivo pdf que subiste y encuantos fragmentos partio la información para subirla a nuestra base vectorial que se usará para que el agente te de una respuesta a tú pregunta lo más acertada posible.
+Una vez subido nuestro archvio pdf y haciendo clic a el boton **Execute**, cambiará otra vez ligeramente la interfaz, y puedes observar que manda un mensaje al final, el cual es: El nombre del archivo pdf que subiste y encuantos fragmentos partio la información para subirla a nuestra base vectorial que se usará para que el agente te de una respuesta a tú pregunta lo más acertada posible.
 
 <p align="center">
     <img src="Imagenes_Readme/6.png" width="70%" alt="Documentación de FastAPI">
@@ -374,20 +379,19 @@ Una vez subido nuestro archvio pdf y presionando el boton **Execute**, cambiara 
     <img src="Imagenes_Readme/7.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Una vez presionando el boton de **Try It out**; Puedes observar como cambio un poco la interfaz, perimitiendote cambiar la pregunta de **hola** que se coloco, por lo que tú quieras o lo que sea que le quieras preguntar al agente, o preguntas referentes al contenido de tú archivo y posteriormente le das clic al boton que dice **Execute**.
+Una vez haciendo clic a el boton de **Try It out**; Puedes observar otro cambio en la interfaz; Perimitiendote cambiar la pregunta de **hola** que se colocó anteriormente, por lo que tú quieras o lo que sea que le quieras preguntar al agente, o preguntas referentes al contenido de tú archivo y posteriormente le das clic al boton que dice **Execute**.
 
 <p align="center">
     <img src="Imagenes_Readme/8.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-
-Notarás que; La pregunta que se hizo **(hola)** y la fuente usada **(archivo pdf)**; Más abajo hay otro recuadro que muestra la respuesta y los fragmetos o contexto que uso el agente del archivo pdf para poder darte una respuesta lo más precisa posible.
+Notarás que; La pregunta que se hizo **(hola)** y la fuente usada **(archivo pdf)** son las que se usarán para que el modelo de te una respuesta; Más abajo hay otro recuadro que muestra la respuesta y los fragmetos o contexto que uso el agente del archivo pdf para poder darte una respuesta lo más precisa posible.
 
 <p align="center">
     <img src="Imagenes_Readme/9.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Haciendo otra pregunta, regresas al **POST preguntar** y cambias la pregunta por otra que desees hacer, y posteriormente le das clic al **boton Execute**.
+Para realizar otra pregunta, regresas al **POST preguntar** y cambias la pregunta por otra que desees hacer, y posteriormente le das clic al **boton Execute**.
 
 <p align="center">
     <img src="Imagenes_Readme/10.png" width="70%" alt="Documentación de FastAPI">
@@ -401,7 +405,7 @@ Nuestro agente te dará otra respuesta, lo más acertdo posible.
 
 ## Saliendo de la interfaz 
 
-Para salir de la interfaz de Fastapi, en la página web abierta solo la cerramos como cualquier otra página. Y en nuestra IDE en este caso Visual Studio Code, **das clip en la terminal** para que **se ejecute el comando ctrl + C**, y así termine ese proceso, deberá salirte algo parecido como se muestra en la imagen:
+Para salir de la interfaz de Fastapi, en la página web abierta solo la cerramos como cualquier otra página. Y en nuestra terminal, **das clip en la terminal** y colocas el siguiente comando **ctrl + C** para que ejecute la finalización del proceso abierto en la terminal, y deberá salirte algo parecido como se muestra en la imagen:
 
 <p align="center">
     <img src="Imagenes_Readme/12.png" width="70%" alt="Documentación de FastAPI">

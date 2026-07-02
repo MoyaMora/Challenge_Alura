@@ -339,14 +339,25 @@ uvicorn archivo_reto_principal:app --reload
 Abre:
 
 http://localhost:8000/docs
-<p align="center"> <img src="Imagenes_Readme/1.png" width="900"> </p>
-
-<p align="center">
-    <img src="Imagenes_Readme/1.png" width="70%">
-</p>
 
 La interfaz de Swagger permite probar todos los endpoints de la API.
 
-# Prueba
+## 📸 Paso 1 — Abrir la documentación
 
-[Imagen](./Imagenes_Readme/1.png)
+Ejecuta:
+
+```bash
+uvicorn archivo_reto_principal:app --reload
+```
+
+Abre:
+
+```text
+http://localhost:8000/docs
+```
+
+<p align="center">
+    <img src="Imagenes_Readme/1.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+La interfaz de Swagger permite probar todos los endpoints de la API.

@@ -323,3 +323,29 @@ Agregar alguno de los siguientes elementos:
 - URL del despliegue en OCI.
 
 Esto servirá para demostrar que el proyecto fue desplegado correctamente.
+
+Se ve mucho más profesional.
+
+---
+
+# Numerar las imágenes
+
+En lugar de llamarlas
+
+```text
+imagen1.png
+imagen2.png
+
+## 📸 Paso 1 — Abrir la documentación
+
+Ejecuta:
+
+```bash
+uvicorn archivo_reto_principal:app --reload
+
+Abre:
+
+http://localhost:8000/docs
+<p align="center"> <img src="assets/images/01_swagger.png" width="900"> </p>
+
+La interfaz de Swagger permite probar todos los endpoints de la API.

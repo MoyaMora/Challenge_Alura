@@ -341,4 +341,8 @@ Abre:
 http://localhost:8000/docs
 <p align="center"> <img src="Imagenes_Readme/1.png" width="900"> </p>
 
+<p align="center">
+    <img src="Imagenes_Readme/1.png" width="70%">
+</p>
+
 La interfaz de Swagger permite probar todos los endpoints de la API.

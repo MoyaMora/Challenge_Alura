@@ -345,6 +345,10 @@ le das clip a la pestaña donde esta marcada con una flecha azul para desplegar 
     <img src="Imagenes_Readme/2.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
+Una vez dada a la pestaña selecionada; Se desplegará un boton que dira **Try it out**, y a su vez se desplegara otro menu.
+
+
+
 ---
 
 ## 4. Evidencia del despliegue

@@ -345,9 +345,62 @@ le das clip a la pestaña donde esta marcada con una flecha azul para desplegar 
     <img src="Imagenes_Readme/2.png" width="70%" alt="Documentación de FastAPI">
 </p>
 
-Una vez dada a la pestaña selecionada; Se desplegará un boton que dira **Try it out**, y a su vez se desplegara otro menu.
+Una vez dada a la pestaña selecionada; Se desplegará un boton que dira **Try it out**, y a su vez se desplegará otro menu.
+
+<p align="center">
+    <img src="Imagenes_Readme/3.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Una vez presionando el boton de **Try it out**, Puedes observar como cambio un poco la interfaz, perimitiendote subir tú archivo pdf (el que tú desees), dándole clip en la barra que dice **seleccionar archivo** y posteriormente al **boton tipo barra en azul que dice Execute** para que se ejecute el proceso (las flechas azules grandes indican la posicion de los botones a presionar).
+
+<p align="center">
+    <img src="Imagenes_Readme/4.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Una vez subido nuestro archvio pdf y presionando el boton **Execute**, cambiara ligeramente la interfaz, y puedes observar que manda un mensaje al final; El nombre del archivo pdf que subiste y encuantos fragmentos partio la información para subirla a nuestra base vectorial que se usará para que el agente te de una respuesta a tú pregunta lo más acertada posible.
+
+<p align="center">
+    <img src="Imagenes_Readme/5.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+## ¡En este punto estamos listo para pasarnos al POST preguntar!
+
+<p align="center">
+    <img src="Imagenes_Readme/6.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Una vez presionando el boton de **Try It out**; Puedes observar como cambio un poco la interfaz, perimitiendote cambiar la pregunta de **hola** que se coloco, por lo que tú quieras o lo que sea que le quieras preguntar al agente, o preguntas referentes al contenido de tú archivo y posteriormente le das clic al boton que dice **Execute**.
+
+<p align="center">
+    <img src="Imagenes_Readme/7.png" width="70%" alt="Documentación de FastAPI">
+</p>
 
 
+Notarás que; La pregunta que se hizo **(hola)** y la fuente usada **(archivo pdf)**; Más abajo hay otro recuadro que muestra la respuesta y los fragmetos o contexto que uso el agente del archivo pdf para poder darte una respuesta lo más precisa posible.
+
+<p align="center">
+    <img src="Imagenes_Readme/8.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Haciendo otra pregunta, regresas al **POST preguntar** y cambias la pregunta por otra que desees hacer, y posteriormente le das clic al **boton Execute**.
+
+<p align="center">
+    <img src="Imagenes_Readme/9.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+Nuestro agente te dará otra respuesta, lo más acertdo posible.
+
+<p align="center">
+    <img src="Imagenes_Readme/10.png" width="70%" alt="Documentación de FastAPI">
+</p>
+
+## Saliendo de la interfaz 
+
+Para salir de la interfaz de Fastapi, en la página web abierta solo la cerramos como cualquier otra página. Y en nuestra IDE en este caso Visual Studio Code, **das clip en la terminal** para que **se ejecute el comando ctrl + C**, y así termine ese proceso, deberá salirte algo parecido como se muestra en la imagen:
+
+<p align="center">
+    <img src="Imagenes_Readme/11.png" width="70%" alt="Documentación de FastAPI">
+</p>
 
 ---
 

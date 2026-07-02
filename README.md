@@ -346,3 +346,7 @@ http://localhost:8000/docs
 </p>
 
 La interfaz de Swagger permite probar todos los endpoints de la API.
+
+# Prueba
+
+![Prueba](Imagenes_Readme/1.png)

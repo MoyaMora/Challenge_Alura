@@ -424,10 +424,18 @@ para ver los resultados que se obtuvieron anteriormente.
 Es tiempo de ver ejecutado nuestro proyecto graficamente bonito, anterior mente usabamos sólo la libreria de Fastapi el cual nos ayudaba de manera inmediata
 con la creacion de la interfaz que se mostro a continuación. Ahora queremos tener control de la interfaz grafica para que se vea a lo que estamos más acostumbrados.
 
-# 1. Vas a abrir ***Dos terminales diferentes*** para correr ambos servidores al mismo tiempo (Fastapi y Streamlit), Se muestra imagene ilustrativa:
+- Paso 1. Vas a abrir ***Dos terminales diferentes*** para correr ambos servidores al mismo tiempo (Fastapi y Streamlit), Se muestran imagenes ilustrativas:
+
+***Terminal 1 (Backend - FastAPI)***
 
 <p align="center">
     <img src="Imagenes_Readme/Imagenes_Streamlit/1.png" width="70%" alt="Documentación de Streamlit">
+</p>
+
+***Terminal 2 (Frontend - Streamlit)***
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/2.png" width="70%" alt="Documentación de Streamlit">
 </p>
 
 

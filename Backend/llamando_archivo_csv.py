@@ -3,6 +3,57 @@
 #Librerias para tratar y cargar archivo csv:
 from librerias_backend import *
 
+def preparar_reviews_csv_subido_para_llm(archivo_bytes):
+    """
+    Convierte cualquier CSV en una lista de textos combinando sus columnas.
+    No depende de nombres específicos como reviewText.
+    """
+
+    try:
+        df = pd.read_csv(io.BytesIO(archivo_bytes))
+
+        # eliminar filas completamente vacías
+        df = df.dropna(how="all")
+
+        lista_reviews = []
+
+        for _, row in df.iterrows():
+            # convierte TODA la fila en un solo string
+            texto_fila = " | ".join(
+                str(valor).strip()
+                for valor in row.values
+                if pd.notna(valor)
+            )
+
+            if texto_fila.strip():
+                lista_reviews.append(texto_fila)
+
+        print(f"CSV genérico procesado. Filas: {len(lista_reviews)}")
+        return lista_reviews
+
+    except Exception as e:
+        print(f"Error al procesar CSV: {e}")
+        return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+
+#Importacion de librerias.
+#Librerias para tratar y cargar archivo csv:
+from librerias_backend import *
+
 
 # CONFIGURACIÓN PARA TERMINAL: Fuerza a pandas a mostrar todas las columnas 
 # y extiende el ancho de las mismas, del data frame csv:
@@ -41,3 +92,5 @@ def preparar_reviews_csv_subido_para_llm(archivo_bytes):
     except Exception as e:
         print(f"Error al procesar el CSV subido: {e}")
         return None
+
+"""

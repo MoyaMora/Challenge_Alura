@@ -115,18 +115,29 @@ async def subir_csv(file: UploadFile = File(...)):
         if not lista_de_reseñas:
             raise HTTPException(status_code=400, detail="No se pudo procesar el archivo CSV o estaba vacío.")
 
-        # Limpiar registros anteriores de la colección para evitar mezclar archivos
+                # Convertimos filas en un texto estructurado
+        texto_completo_csv = "\n".join(
+            [f"Registro {i+1}: {row}" for i, row in enumerate(lista_de_reseñas)]
+        )
+
+        # Creamos chunks semánticos (mejor recuperación)
+        chunks_csv = text_splitter.split_text(texto_completo_csv)
+
+        # Limpiamos colección anterior
         ids_existentes = coleccion_csv.get()["ids"]
         if ids_existentes:
             coleccion_csv.delete(ids=ids_existentes)
 
-        # RAG: Almacenamos cada reseña de la lista de forma independiente
+        # Guardamos chunks en ChromaDB
         coleccion_csv.add(
-            documents=lista_de_reseñas,
-            ids=[f"csv_row_{i}" for i in range(len(lista_de_reseñas))]
+            documents=chunks_csv,
+            ids=[f"csv_chunk_{i}" for i in range(len(chunks_csv))]
         )
 
-        return {"mensaje": f"✅ CSV '{file.filename}' indexado. {len(lista_de_reseñas)} reseñas listas de forma individual."}
+        return {
+            "mensaje": f"CSV '{file.filename}' indexado correctamente.",
+            "chunks_creados": len(chunks_csv)
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del CSV: {e}")
@@ -177,7 +188,8 @@ def consultar_agente(consulta: Consulta):
         query_texts=[pregunta_usuario],
         # Evitando que la base de conocimiento sea muy pequeña y de error:
         # Si se obtienen menos fragmentos, me da la cantidad minima. (15,5) daria 5 fragmentos. 
-        n_results=min(15, coleccion_pdf.count())
+        n_results=min(15, coleccion_pdf.count()),
+        include=["documents","distances"]
         )
 
         # Obteniendo la informacion mas relevante de la base de datos:
@@ -209,28 +221,51 @@ def consultar_agente(consulta: Consulta):
                                  detail="No hay datos de CSV indexados. Usa /subir-csv primero."
             )
 
-        # Recuperamos los 15 fragmentos más similares a la pregunta del usuario
+        # Recuperamos los 8 fragmentos más similares a la pregunta del usuario
+        # Recuperación más precisa (menos ruido, más relevancia)
+        n_resultados = min(8, coleccion_csv.count())
+
         resultados_busqueda = coleccion_csv.query(
             query_texts=[pregunta_usuario],
-            n_results=min(15, coleccion_csv.count())
-        )
+            n_results=n_resultados,
+            include=["documents", "distances"]
+            )
 
-        # Obtencion de la informacion:
-        docs = resultados_busqueda.get("documents") or []
+        # =========================
+        # EXTRACCIÓN DE DATOS
+        # =========================
+        docs = resultados_busqueda.get("documents", [])
+        distances = resultados_busqueda.get("distances", [])
 
-        # Evitando que el documento contenga poca informacion o imagenes:
-        if len(docs) == 0 or len(docs[0]) == 0:
+        # =========================
+        #  FILTRO POR SIMILITUD
+        # =========================
+        filtrados = [
+            doc for doc, dist in zip(docs[0], distances[0])
+            if dist < 1.0
+            ]
+
+        # =========================
+        # 🔥 VALIDACIÓN
+        # =========================
+        if len(filtrados) == 0:
             raise HTTPException(
                 status_code=400,
-                detail="No se encontraron resultados relevantes en la base de datos."
+                detail="No se encontraron fragmentos suficientemente relevantes."
             )
-        # Juntando toda la información,
-        contexto_recuperado = "\n---\n".join(docs[0])
+
+        # =========================
+        # CONTEXTO FINAL
+        # =========================
+        contexto_recuperado = "\n---\n".join(filtrados)
+
+        #
 
         # Dandole personalidad al modelo de IA:
-        system_prompt = """ Eres un asistente experto en análisis de sentimientos y compresion lectora.
-                         Responde a la pregunta basándote únicamente en los fragmentos del documneto
-                         provisto."""
+        system_prompt = """ Eres un asistente experto en análisis de datos.
+                        Responde únicamente usando la información proporcionada 
+                        en los fragmentos del documento.Si no hay suficiente información,
+                        indica que no está presente en los datos."""
     
         contenido_completo = f"Contexto de reseñas recuperado de la base de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"
     

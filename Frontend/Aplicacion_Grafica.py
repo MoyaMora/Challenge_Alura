@@ -15,7 +15,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 st.set_page_config(page_title="Buscador RAG Multidocumento", page_icon="🤖", layout="centered")
 st.title("Asistente RAG Multi-Documento")
-st.subheader("Carga archivos PDF o CSV y realiza cualquier consulta.")
+st.subheader("Carga archivos PDF o CSV y consulta cualquier tipo de información con IA (RAG).")
 
 # Selector visual del tipo de archivo
 tipo_fuente = st.radio("Selecciona el tipo de documento a utilizar:", ("PDF (Documentos)", "CSV (Reseñas)"), horizontal=True)
@@ -45,7 +45,7 @@ st.markdown("---")
 
 # SECCIÓN 2: CONSULTAS
 st.header("2. Realiza tú consulta")
-pregunta = st.text_input(f"Pregunta sobre el archivo {fuente_key.upper()} cargado:")
+pregunta = st.text_input(f"Haz una pregunta sobre los datos del archivo {fuente_key.upper()}:")
 
 if pregunta:
     if st.button("Enviar Pregunta a la IA"):

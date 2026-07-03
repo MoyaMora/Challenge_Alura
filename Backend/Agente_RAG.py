@@ -257,7 +257,7 @@ def consultar_agente(consulta: Consulta):
             "pregunta": pregunta_usuario,
             "respuesta_agente": response.choices[0].message.content,
             # Agregamos los fragmentos reales utilizados para que el usuario verifique la fuente
-            "Contexto_Utilizado_Por_El_RAG": resultados_busqueda["documents"][0]
+            "contexto_utilizado_rag": resultados_busqueda["documents"][0]
         }
     # Mandando mensaje de error:
     except Exception as e:

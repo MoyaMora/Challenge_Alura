@@ -18,7 +18,13 @@ st.title("Asistente RAG Multi-Documento")
 st.subheader("Carga archivos PDF o CSV y consulta cualquier tipo de información con IA (RAG).")
 
 # Selector visual del tipo de archivo
-tipo_fuente = st.radio("Selecciona el tipo de documento a utilizar:", ("PDF (Documentos)", "CSV (Reseñas)"), horizontal=True)
+tipo_fuente = st.radio("Selecciona el tipo de documento:",
+    (
+        "📄 PDF (Documentos)",
+        "📊 CSV (Datos estructurados)"
+    ),
+    horizontal=True)
+
 # Guardando seleccion de documento.
 fuente_key = "pdf" if "PDF" in tipo_fuente else "csv"
 

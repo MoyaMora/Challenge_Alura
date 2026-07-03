@@ -115,7 +115,7 @@ async def subir_csv(file: UploadFile = File(...)):
         if not lista_de_reseñas:
             raise HTTPException(status_code=400, detail="No se pudo procesar el archivo CSV o estaba vacío.")
 
-                # Convertimos filas en un texto estructurado
+        # Convertimos filas en un texto estructurado
         texto_completo_csv = "\n".join(
             [f"Registro {i+1}: {row}" for i, row in enumerate(lista_de_reseñas)]
         )
@@ -135,7 +135,7 @@ async def subir_csv(file: UploadFile = File(...)):
         )
 
         return {
-            "mensaje": f"CSV '{file.filename}' indexado correctamente.",
+            "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
             "chunks_creados": len(chunks_csv)
         }
 
@@ -254,9 +254,9 @@ def consultar_agente(consulta: Consulta):
                 detail="No se encontraron fragmentos suficientemente relevantes."
             )
 
-        # =========================
+        # ------------------------
         # CONTEXTO FINAL
-        # =========================
+        # -------------------------
         contexto_recuperado = "\n---\n".join(filtrados)
 
         #

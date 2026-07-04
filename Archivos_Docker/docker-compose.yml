@@ -4,7 +4,7 @@ services:
 
   backend:
     build:
-      context: ../Backend
+      context: ..
       dockerfile: Archivos_Docker/DockerFile.Backend
 
     container_name: challenge_alura_backend
@@ -27,7 +27,7 @@ services:
 
   frontend:
     build:
-      context: ../Frontend
+      context: ..
       dockerfile: Archivos_Docker/DockerFile.Frontend
 
     container_name: challenge_alura_frontend

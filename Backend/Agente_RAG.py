@@ -36,9 +36,14 @@ async def manejador_error_validacion(request, exc):
         }
     )
 
+# Evita problemas si el directorio no existe la primera vez que se ejecuta.
+os.makedirs("./chroma_db", exist_ok=True)
+
 # Aqui comienza la configuración de la base de datos vectorial (RAG)
 # Inicializamos ChromaDB en memoria
-chroma_client = chromadb.Client()
+chroma_client = chromadb.PersistentClient(
+    path="./chroma_db"
+)
 
 # Usamos un modelo de embeddings ligero de HuggingFace que corre localmente sin llaves de API
 #from chromadb.utils import embedding_functions

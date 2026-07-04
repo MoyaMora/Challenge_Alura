@@ -1,0 +1,25 @@
+FROM python:3.11-slim
+
+# Instalar dependencias del sistema necesarias para compilar librerías nativas si ChromaDB lo requiere
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copiar e instalar dependencias de Python
+COPY Requirements.Backend.txt .
+# Línea corregida aquí:
+#RUN pip install --no-cache-dir torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
+RUN pip install --no-cache-dir -r Requirements.Backend.txt
+
+# Copiar el código del backend hacia el contenedor
+COPY Backend/ .
+COPY .env /app/.env
+
+# Exponer el puerto de FastAPI
+EXPOSE 8000
+
+# Comando para arrancar Uvicorn escuchando en todas las interfaces de red (0.0.0.0)
+CMD ["uvicorn", "Agente_RAG:app", "--host", "0.0.0.0", "--port", "8000"]

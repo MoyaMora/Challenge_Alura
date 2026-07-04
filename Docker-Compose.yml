@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.Backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.Frontend
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      - Backend
+
+volumes:
+  hf_cache:

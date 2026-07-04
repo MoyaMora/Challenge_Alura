@@ -5,9 +5,9 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.Backend
+      dockerfile: DockerFile.Backend
 
-    container_name: backend
+    container_name: challenge_alura_backend
 
     ports:
       - "8000:8000"
@@ -27,9 +27,9 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: Dockerfile.Frontend
+      dockerfile: DockerFile.Frontend
 
-    container_name: frontend
+    container_name: challenge_alura_frontend
 
     ports:
       - "8501:8501"

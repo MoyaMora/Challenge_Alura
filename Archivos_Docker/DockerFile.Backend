@@ -25,7 +25,7 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
 RUN pip install --no-cache-dir -r Requirements.Backend.txt
 
 # Copiar el Backend (código)
-COPY Backend/ .
+COPY . .
 
 # Variables de entorno
 #COPY .env .

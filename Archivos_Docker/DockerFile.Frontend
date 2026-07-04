@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r Requirements.Frontend.txt
 
 # Copiar código frontend
-COPY Frontend/ .
+COPY . .
 
 # Exponer puerto Streamlit
 EXPOSE 8501

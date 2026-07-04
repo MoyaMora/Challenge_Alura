@@ -112,13 +112,29 @@ async def subir_csv(file: UploadFile = File(...)):
         # Ahora obtenemos una lista de reseñas directamente
         lista_de_reseñas = preparar_reviews_csv_subido_para_llm(contenido_bytes)
 
+        #
+        df = pd.read_csv(io.BytesIO(contenido_bytes))
+
+        columnas = ", ".join(df.columns)
+
+        numero_registros = len(df)
+
+        resumen_csv = f"""Este archivo CSV contiene {numero_registros} registros.
+        Las columnas del archivo son:
+        {columnas}
+        Los registros almacenan información estructurada que puede consultarse mediante preguntas."""
+
         if not lista_de_reseñas:
             raise HTTPException(status_code=400, detail="No se pudo procesar el archivo CSV o estaba vacío.")
 
         # Convertimos filas en un texto estructurado
-        texto_completo_csv = "\n".join(
-            [f"Registro {i+1}: {row}" for i, row in enumerate(lista_de_reseñas)]
-        )
+        texto_completo_csv = resumen_csv + "\n\n"
+        
+        texto_completo_csv += "\n\n".join(
+            [f"Registro {i+1}\n{row}" for i, row in enumerate(lista_de_reseñas)]
+            )
+
+
 
         # Creamos chunks semánticos (mejor recuperación)
         chunks_csv = text_splitter.split_text(texto_completo_csv)
@@ -221,9 +237,9 @@ def consultar_agente(consulta: Consulta):
                                  detail="No hay datos de CSV indexados. Usa /subir-csv primero."
             )
 
-        # Recuperamos los 8 fragmentos más similares a la pregunta del usuario
+        # Recuperamos los 15 fragmentos más similares a la pregunta del usuario
         # Recuperación más precisa (menos ruido, más relevancia)
-        n_resultados = min(8, coleccion_csv.count())
+        n_resultados = min(15, coleccion_csv.count())
 
         resultados_busqueda = coleccion_csv.query(
             query_texts=[pregunta_usuario],
@@ -242,17 +258,15 @@ def consultar_agente(consulta: Consulta):
         # =========================
         filtrados = [
             doc for doc, dist in zip(docs[0], distances[0])
-            if dist < 1.0
+            if dist < 1.0 # se probo con 1.0
             ]
-
-        # =========================
-        # 🔥 VALIDACIÓN
-        # =========================
+        
+        # Si ningún fragmento pasó el filtro,
+        # usamos los mejores resultados recuperados por Chroma.
         if len(filtrados) == 0:
-            raise HTTPException(
-                status_code=400,
-                detail="No se encontraron fragmentos suficientemente relevantes."
-            )
+            filtrados = docs[0]
+
+
 
         # ------------------------
         # CONTEXTO FINAL
@@ -262,10 +276,22 @@ def consultar_agente(consulta: Consulta):
         #
 
         # Dandole personalidad al modelo de IA:
-        system_prompt = """ Eres un asistente experto en análisis de datos.
-                        Responde únicamente usando la información proporcionada 
-                        en los fragmentos del documento.Si no hay suficiente información,
-                        indica que no está presente en los datos."""
+        system_prompt = """ Eres un asistente experto en análisis de datos y archivos CSV.
+                        Debes responder únicamente utilizando la información contenida en 
+                        los fragmentos recuperados.
+
+                        Si el usuario pregunta:
+
+                        - ¿De qué trata?
+                        - ¿Qué contiene?
+                        - Haz un resumen.
+                        - ¿Qué información tiene?
+
+                        Describe el contenido general del archivo utilizando el resumen y
+                        los registros recuperados.
+
+                        Si la información no aparece en el contexto,
+                        indica claramente que no está presente. """
     
         contenido_completo = f"Contexto de reseñas recuperado de la base de datos:\n\n{contexto_recuperado}\n\nPregunta: {pregunta_usuario}"
     

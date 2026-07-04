@@ -1,13 +1,61 @@
 
+from librerias_backend import *
+
+def preparar_reviews_csv_subido_para_llm(archivo_bytes):
+
+    try:
+
+        df = pd.read_csv(io.BytesIO(archivo_bytes))
+
+        df = df.dropna(how="all")
+
+        lista_reviews = []
+
+        for _, row in df.iterrows():
+
+            texto = []
+
+            for columna, valor in row.items():
+
+                if pd.notna(valor):
+
+                    texto.append(f"{columna}: {valor}")
+
+            texto_fila = "\n".join(texto)
+
+            lista_reviews.append(texto_fila)
+
+        print(f"CSV procesado correctamente. Registros: {len(lista_reviews)}")
+
+        return lista_reviews
+
+    except Exception as e:
+
+        print(e)
+
+        return None
+
+
+
+
+
+
+
+
+
+
+
+"""
+
 #Importacion de librerias.
 #Librerias para tratar y cargar archivo csv:
 from librerias_backend import *
 
 def preparar_reviews_csv_subido_para_llm(archivo_bytes):
-    """
-    Convierte cualquier CSV en una lista de textos combinando sus columnas.
-    No depende de nombres específicos como reviewText.
-    """
+    
+    # Convierte cualquier CSV en una lista de textos combinando sus columnas.
+    # No depende de nombres específicos como reviewText.
+    
 
     try:
         df = pd.read_csv(io.BytesIO(archivo_bytes))
@@ -35,7 +83,7 @@ def preparar_reviews_csv_subido_para_llm(archivo_bytes):
         print(f"Error al procesar CSV: {e}")
         return None
 
-
+"""
 
 
 

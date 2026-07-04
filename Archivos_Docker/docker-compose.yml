@@ -1,10 +1,10 @@
-version: '3.8'
+#version: '3.8'
 
 services:
 
   backend:
     build:
-      context: ..
+      context: ../Backend
       dockerfile: Archivos_Docker/DockerFile.Backend
 
     container_name: challenge_alura_backend
@@ -27,7 +27,7 @@ services:
 
   frontend:
     build:
-      context: ..
+      context: ../Frontend
       dockerfile: Archivos_Docker/DockerFile.Frontend
 
     container_name: challenge_alura_frontend

@@ -3,6 +3,9 @@
 # IMPORTAMOS TODAS LAS LIBRERÍAS EXTERNAS DESDE EL ARCHIVO DE DEPENDENCIAS
 from librerias_frontend import *
 
+# Limitando el tamaño del archivo a subir:
+st.set_option('server.maxUploadSize', 2048)
+
 #Cargando variables de entorno donde se encuentra nuestra API_URL:
 load_dotenv()
 
@@ -30,6 +33,8 @@ fuente_key = "pdf" if "PDF" in tipo_fuente else "csv"
 
 # SECCIÓN 1: CARGA DE ARCHIVOS 
 st.header("1. Sube tu archivo ")
+st.caption("📌 Tamaño máximo permitido: 2GB | Formatos: PDF o CSV")
+
 extensiones = ["pdf"] if fuente_key == "pdf" else ["csv"]
 archivo_subido = st.file_uploader(f"Elige un archivo y haz clic .{fuente_key}", type=extensiones)
 
@@ -41,7 +46,7 @@ if archivo_subido is not None:
             try:
                 response = requests.post(f"{API_URL}{endpoint}", files=files)
                 if response.status_code == 200:
-                    st.success(f"✅ ¡Archivo {archivo_subido.name} indexado con éxito!")
+                    st.success(f"¡Archivo {archivo_subido.name} indexado con éxito!")
                 else:
                     st.error(f"Error de la API: {response.text}")
             except requests.exceptions.ConnectionError:

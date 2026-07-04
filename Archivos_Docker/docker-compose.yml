@@ -4,8 +4,8 @@ services:
 
   backend:
     build:
-      context: .
-      dockerfile: DockerFile.Backend
+      context: ..
+      dockerfile: Archivos_Docker/DockerFile.Backend
 
     container_name: challenge_alura_backend
 
@@ -13,7 +13,8 @@ services:
       - "8000:8000"
 
     env_file:
-      - .env
+      - ../Backend/.env
+
 
     volumes:
       # Cache del modelo de HuggingFace
@@ -26,8 +27,8 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: DockerFile.Frontend
+      context: ..
+      dockerfile: Archivos_Docker/DockerFile.Frontend
 
     container_name: challenge_alura_frontend
 
@@ -35,10 +36,11 @@ services:
       - "8501:8501"
 
     env_file:
-      - .env
+      - ../Frontend/.env
 
     depends_on:
       - backend
+      
 
     restart: unless-stopped
 

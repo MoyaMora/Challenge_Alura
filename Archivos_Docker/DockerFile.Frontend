@@ -2,17 +2,20 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copiar e instalar dependencias de Python
+# Copiar requirements primero (mejor cache)
 COPY Requirements.Frontend.txt .
-# Línea corregida con la URL oficial de PyTorch para CPU:
+
+# Actualizar pip (recomendado)
+RUN pip install --upgrade pip
+
+# Instalar dependencias
 RUN pip install --no-cache-dir -r Requirements.Frontend.txt
 
-# Copiar el código de la app gráfica
+# Copiar código frontend
 COPY Frontend/ .
-COPY .env /app/.env
 
-# Exponer el puerto por defecto de Streamlit
+# Exponer puerto Streamlit
 EXPOSE 8501
 
-# Comando para ejecutar Streamlit
+# Ejecutar app
 CMD ["streamlit", "run", "Aplicacion_Grafica.py", "--server.port=8501", "--server.address=0.0.0.0"]

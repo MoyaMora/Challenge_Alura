@@ -438,6 +438,15 @@ con la creacion de la interfaz que se mostro a continuación. Ahora queremos ten
     <img src="Imagenes_Readme/Imagenes_Streamlit/2.png" width="70%" alt="Documentación de Streamlit">
 </p>
 
+# Después de haber ejecutado con éxito los comandos en la terminal 1 y terminal 2 
+En nuestro navegador saldrá esta interfaz:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/3.png" width="70%" alt="Documentación de Streamlit">
+</p>
+
+Y por fin se muestra la interfaz que usaremos para preguntarle cosas a nuestro agente.
+
 
 ---
 

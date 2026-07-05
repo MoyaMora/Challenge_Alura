@@ -2,27 +2,42 @@
 from librerias_backend import *
 
 def preparar_reviews_csv_subido_para_llm(archivo_bytes):
+    # Ese parámetro contiene el archivo CSV en formato bytes.
 
+    # Cuando el usuario sube un archivo en FastAPI 
+    # normalmente llega así: bytes no en una direcion url
+    
     try:
-
+        # Convirtiendo los bytes en un archivo "virtual".
+        # y se obtiene el data frame con pandas.
         df = pd.read_csv(io.BytesIO(archivo_bytes))
-
+        
+        # Eliminando filas vacias, donde las columnas estan vacias.
         df = df.dropna(how="all")
 
+        # En esta lista; Aquí se guardará un texto
+        # por cada fila del CSV.
         lista_reviews = []
 
+        # Recorremos fila por fila.
         for _, row in df.iterrows():
-
+            
+            # Almacenando todas las columnas de una sola fila.
             texto = []
-
+            
+            # Recorremos columna por columna
             for columna, valor in row.items():
-
+                # Verificamos que no este vacia la columna
                 if pd.notna(valor):
-
+                    # Creando columnda
                     texto.append(f"{columna}: {valor}")
-
+            
+            # Uniendo todo (Fila, columna), separado por un salto de linea 
             texto_fila = "\n".join(texto)
 
+            # Guarda todo, Cada elemento representa un documento independiente
+            # que después puede convertirse en un embedding y 
+            # almacenarse en ChromaDB.
             lista_reviews.append(texto_fila)
 
         print(f"CSV procesado correctamente. Registros: {len(lista_reviews)}")
@@ -34,111 +49,3 @@ def preparar_reviews_csv_subido_para_llm(archivo_bytes):
         print(e)
 
         return None
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-#Importacion de librerias.
-#Librerias para tratar y cargar archivo csv:
-from librerias_backend import *
-
-def preparar_reviews_csv_subido_para_llm(archivo_bytes):
-    
-    # Convierte cualquier CSV en una lista de textos combinando sus columnas.
-    # No depende de nombres específicos como reviewText.
-    
-
-    try:
-        df = pd.read_csv(io.BytesIO(archivo_bytes))
-
-        # eliminar filas completamente vacías
-        df = df.dropna(how="all")
-
-        lista_reviews = []
-
-        for _, row in df.iterrows():
-            # convierte TODA la fila en un solo string
-            texto_fila = " | ".join(
-                str(valor).strip()
-                for valor in row.values
-                if pd.notna(valor)
-            )
-
-            if texto_fila.strip():
-                lista_reviews.append(texto_fila)
-
-        print(f"CSV genérico procesado. Filas: {len(lista_reviews)}")
-        return lista_reviews
-
-    except Exception as e:
-        print(f"Error al procesar CSV: {e}")
-        return None
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-#Importacion de librerias.
-#Librerias para tratar y cargar archivo csv:
-from librerias_backend import *
-
-
-# CONFIGURACIÓN PARA TERMINAL: Fuerza a pandas a mostrar todas las columnas 
-# y extiende el ancho de las mismas, del data frame csv:
-#pd.set_option('display.max_columns', None)
-#pd.set_option('display.width', 100)
-
-
-def preparar_reviews_csv_subido_para_llm(archivo_bytes):
-
-    # Recibe los bytes de un archivo CSV subido por la API,
-    # extrae las reseñas de la columna 'reviewText' 
-    # y las devuelve como una lista de textos limpios 
-    # para indexar directamente en la base de datos vectorial.
-    # param archivo_bytes: Bytes del archivo cargado desde FastAPI
-    # return: List[str] con cada reseña individual, o None si falla
-
-    try:
-        # Cargamos el DataFrame directamente desde los bytes en memoria
-        df = pd.read_csv(io.BytesIO(archivo_bytes))
-
-        # Verificamos la columna mandatoria
-        if "reviewText" not in df.columns:
-            raise KeyError(
-                "La columna 'reviewText' no existe en el archivo CSV."
-            )
-
-        # Filtramos valores nulos, convertimos a string y limpiamos espacios extraños
-        columna_reviews = df["reviewText"].dropna().astype(str)
-
-        # Convertimos a una lista de reseñas individuales eliminando espacios en blanco en los extremos
-        lista_reviews = [review.strip() for review in columna_reviews if review.strip()]
-
-        print(f"CSV procesado exitosamente. Total de filas válidas: {len(lista_reviews)}")
-        return lista_reviews
-
-    except Exception as e:
-        print(f"Error al procesar el CSV subido: {e}")
-        return None
-
-"""

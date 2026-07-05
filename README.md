@@ -503,13 +503,15 @@ nos mandará un mensaje que se a indexado a la Base con éxito:
   </p>
 
 
-- Aquí, podemos apreciar los Fragmentos que uso la IA para darnos contexto (lo más cercano psoible) a nuestra pregunta:
+- Aquí, podemos apreciar los Fragmentos que uso la IA para darnos contexto (lo más cercano posible) a nuestra pregunta:
 
    <p align="center">
     <img src="Imagenes_Readme/Imagenes_Streamlit/8.png" width="70%" alt="Documentación de Streamlit">
    </p>
 
-Para subir un archivo csv y hacer preguntas, es la misma dinamica que hicimos con subir un archivo pdf y haciendole preguntas a nuestra IA.
+Para subir un archivo csv y hacer preguntas, es la misma dinamica que hicimos con subir un archivo pdf así como hacerle preguntas a nuestra IA.
+
+# Ahora nos pasamos a Docker!
 
 
 

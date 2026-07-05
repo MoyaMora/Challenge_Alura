@@ -438,11 +438,45 @@ con la creacion de la interfaz que se mostro a continuación. Ahora queremos ten
     <img src="Imagenes_Readme/Imagenes_Streamlit/2.png" width="70%" alt="Documentación de Streamlit">
 </p>
 
+Recuerda estar en la dirección correspondiente donde esta tú archivo backend ( Terminal 1), así como la dirección correcta en tú Fronted (Terminal 2), 
+
+-	En a terminal 1 pon este comando:
+      **uvicorn “Nombre_de_Tú_Proyecto_Backend”:app --reload**; En mi caso el nonbre de mi proyecto backend se llama: **Agente_RAG.py**
+      y colocare ese nombre ***sin su extensión*** (.py). En este caso quedará así y será el comando a ejecutar en la terminal:
+
+      ***uvicorn Agente_RAG:app --reload***
+
+-	En la termina 2 pon este comando:
+
+      **streamlit run “nombre_de_tú_aplicación_Frontend”**; En mi caso el nombre de mi aplicación Frontend es: **Aplicación_Grafica.py**,
+ 	   En este caso el comando a ejecutar queda así:
+
+      ***streamlit run Aplicación_Grafica.py***
+
+
+***NOTA:*** Ejecutamos primero el comando en la terminal 1 (uvicorn Agente_RAG:app --reload)
+y si todo sale bien, nos deberá mostrar este mensaje en la terminal: **Applicaction Startup complete**, 
+que indica que podemos ejecutar sin problema el segundo comando en nuestra terminal 2:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/3.png" width="70%" alt="Documentación de Streamlit">
+</p>
+
+Ahora en la terminal 2, ejecutamos el comando:
+
+***streamlit run Aplicación_Grafica.py*** 
+
+Y si todo sale bien nos mandará este mensaje en la terminal y abrirá en automatico una venta en nuestro navegador.
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/4.png" width="70%" alt="Documentación de Streamlit">
+</p>
+
 # Después de haber ejecutado con éxito los comandos en la terminal 1 y terminal 2 
 En nuestro navegador saldrá esta interfaz:
 
 <p align="center">
-    <img src="Imagenes_Readme/Imagenes_Streamlit/3.png" width="70%" alt="Documentación de Streamlit">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/5.png" width="70%" alt="Documentación de Streamlit">
 </p>
 
 Y por fin se muestra la interfaz que usaremos para preguntarle cosas a nuestro agente.

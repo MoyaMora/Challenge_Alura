@@ -419,7 +419,7 @@ Para probar el archivo csv y preguntar, se realiza el mismo procedimiento como l
 
 para ver los resultados que se obtuvieron anteriormente.
 
-### Evidencias para Ejecutar el Backend y Frontend juntos ( Fastapi y Streamlit):
+# Evidencias para Ejecutar el Backend y Frontend juntos ( Fastapi y Streamlit):
 
 Es tiempo de ver ejecutado nuestro proyecto graficamente bonito, anterior mente usabamos sólo la libreria de Fastapi el cual nos ayudaba de manera inmediata
 con la creacion de la interfaz que se mostro a continuación. Ahora queremos tener control de la interfaz grafica para que se vea a lo que estamos más acostumbrados.
@@ -441,7 +441,8 @@ con la creacion de la interfaz que se mostro a continuación. Ahora queremos ten
 Recuerda estar en la dirección correspondiente donde esta tú archivo backend ( Terminal 1), así como la dirección correcta en tú Fronted (Terminal 2), 
 
 -	En a terminal 1 pon este comando:
-      **uvicorn “Nombre_de_Tú_Proyecto_Backend”:app --reload**; En mi caso el nonbre de mi proyecto backend se llama: **Agente_RAG.py**
+  
+      **uvicorn “Nombre_de_Tú_Proyecto_Backend”:app --reload**; En mi caso el nombre de mi proyecto backend se llama: **Agente_RAG.py**
       y colocare ese nombre ***sin su extensión*** (.py). En este caso quedará así y será el comando a ejecutar en la terminal:
 
       ***uvicorn Agente_RAG:app --reload***
@@ -480,6 +481,36 @@ En nuestro navegador saldrá esta interfaz:
 </p>
 
 Y por fin se muestra la interfaz que usaremos para preguntarle cosas a nuestro agente.
+
+# Subiendo archivos y preguntando a nuestra IA:
+
+Se mostrará un icono rojo el archivo a subir y al darle clic en el boton de procesar .PDF en Base Vectorial,
+nos mandará un mensaje que se a indexado a la Base con éxito:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/6.png" width="70%" alt="Documentación de Streamlit">
+</p>
+
+- Ahora podemos realizar preguntas a nuestro agente:
+  En la imagen se puede apreciar que se le hace una pregunta al agente (**De que trata?**), ***una pregunta sin mucho contexto***,
+  hacemos clic donde dice **Enviar pregunta a la IA**,
+  Después podemos ver que el agente nos da una respusta sobre de que trata el archivo subido;
+  Despues vemos una **pestaña** que al haciendo clic ahí podemos ver los **fragmentos**
+  usados del pdf subido para que nos den una respuesta a la pregunta hecha.
+
+  <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/7.png" width="70%" alt="Documentación de Streamlit">
+  </p>
+
+
+- Aquí, podemos apreciar los Fragmentos que uso la IA para darnos contexto (lo más cercano psoible) a nuestra pregunta:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/8.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Para subir un archivo csv y hacer preguntas, es la misma dinamica que hicimos con subir un archivo pdf y haciendole preguntas a nuestra IA.
+
 
 
 ---

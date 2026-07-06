@@ -631,7 +631,17 @@ Después de hacer clic en:
 
 - ***La columna port 8501:8501***
 
-Se despligará nuestra interfaz funcionando.
+Se despligará nuestra interfaz funcionando:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/12.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+La tematica de subir archivos y realizar preguntas a nuestra IA es la misma que ya se explico anteriormente.
+
+- Con estas pruebas estamos listos para subirlo a la nube.
+
+
 
 
 

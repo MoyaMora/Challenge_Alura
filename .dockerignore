@@ -26,7 +26,7 @@ __pycache__
 
 # Ignorar tus credenciales locales 
 # (Docker las inyectará por Docker Compose)
-#.env
+.env
 
 # Base de datos vectorial de Chroma
 chroma_db/

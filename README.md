@@ -513,6 +513,16 @@ Para subir un archivo csv y hacer preguntas, es la misma dinamica que hicimos co
 
 # Ahora nos pasamos a Docker!
 
+Ahora vamos con docker:
+
+-	Primero para hacer pruebas en local, y todo funcione bien. Descargamos docker desktop de este enlace:
+  
+   https://www.docker.com/products/docker-desktop/ 
+
+  <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Streamlit/1.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
 
 
 ---

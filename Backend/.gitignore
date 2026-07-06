@@ -17,5 +17,5 @@ __pycache__/
 *.log
 
 #Archivo de ChromaDb
-chroma_db/
+chroma_db
 

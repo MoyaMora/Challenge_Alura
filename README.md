@@ -531,6 +531,39 @@ Y del lado derecho hay un icono de forma de engrane, en esa sección puedes modi
     <img src="Imagenes_Readme/Imagenes_Docker/2.png" width="70%" alt="Documentación de Streamlit">
    </p>
 
+En el area de recursos (**Resources**) puedes modificar:
+- La memoria ram.
+- La memoria swap.
+- El espacio de disco duro a emplear, entre otras cosas que tú desees modificar.
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/3.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+# Ahora nos pasamos a la creación de nuestros archivos docker
+
+En los cuales tedremos los recursos necesarios que nos servirán para que funcione en cualquier computadora que deseemos.
+
+Ya que estos archivos contendrán:
+
+-	Archivos que contiene nuestro proyecto tanto de backend como frontend.
+-	Se creará un archivo dockerfile , sin extensión el cual tendrá una serie de pasos para su intalación.
+-	Librerias usadas en nuestro proyecto.
+-	Se creará otro archivo llamado dockerignore, igual sin ninguna extensión para no subir variables de entorno entre demás cosas que no debemos compartir por seguridad.
+-	
+## Nuestro archivo DockerFile tiene la siguiente forma:
+
+ <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/4.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+   
+Mientras nuestro archivo dockerignore tiene la siguente forma:
+
+ <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/5.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+
 
 
 ---

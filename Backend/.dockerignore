@@ -28,3 +28,5 @@ __pycache__
 # (Docker las inyectará por Docker Compose)
 #.env
 
+# Base de datos vectorial de Chroma
+chroma_db/

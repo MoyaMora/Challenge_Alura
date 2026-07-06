@@ -16,6 +16,6 @@ __pycache__/
 # Logs
 *.log
 
-#Archivo de ChromaDb
-chroma_db
+# Base de datos vectorial de Chroma
+chroma_db/
 

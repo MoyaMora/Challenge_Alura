@@ -520,7 +520,7 @@ Ahora vamos con docker:
    https://www.docker.com/products/docker-desktop/ 
 
   <p align="center">
-    <img src="Imagenes_Readme/Imagenes_Streamlit/1.png" width="70%" alt="Documentación de Streamlit">
+    <img src="Imagenes_Readme/Imagenes_Docker/1.png" width="70%" alt="Documentación de Streamlit">
    </p>
 
 

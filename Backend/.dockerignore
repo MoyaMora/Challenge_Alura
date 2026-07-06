@@ -28,5 +28,3 @@ __pycache__
 # (Docker las inyectará por Docker Compose)
 #.env
 
-#Archivos ChromaDB
-chroma_db/

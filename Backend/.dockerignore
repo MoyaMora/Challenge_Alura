@@ -27,3 +27,6 @@ __pycache__
 # Ignorar tus credenciales locales 
 # (Docker las inyectará por Docker Compose)
 #.env
+
+#Archivos ChromaDB
+chroma_db/

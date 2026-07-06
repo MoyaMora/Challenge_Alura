@@ -563,6 +563,75 @@ Mientras nuestro archivo dockerignore tiene la siguente forma:
     <img src="Imagenes_Readme/Imagenes_Docker/5.png" width="70%" alt="Documentación de Streamlit">
    </p>
 
+Ambos archivos se encuentran en el repositorio y puedes ver a detalle las cosas que se ocupan en el docker file
+tanto como las cosas que no se permitieron subir en el dockerignore.
+
+Tambien creamos otro archivo llamdo ***Requirements.Banckend.txt*** y ***Requirements.Frontend.txt***,
+aquí se encuentran todas las librerias usadas especificas:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/6.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+***Nota:*** Observa que especificamos versiones para cada una, que son las que se usaron para que nuestro proyecto funcione.
+
+Y finalmente viene el docker-compose.yml, el cual es el que ejecuta todo para la creación de nuestas imágenes en docker desktop y las usemos sin problema alguno.
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/7.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Cada archivo esta en el repositorio donde podrás ver que requiere cada parte; ***Nota***: 
+Si ordenas tú proyecto de otra forma. Revisa que estes en las rutas correctas.
+
+Para ejecutar la creacion de las imágenes docker, Debe estar abierto el programa Docker desktop.
+y nuestro entorno de trabajo, en el cual debemos estar en la ruta donde se encuentra nuestro archivo:
+
+-	docker-compose.yml
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/8.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Es importante que nos encontremos en esa ruta ya que el comando a ejcutar después es:
+
+-	docker compose up --build
+  
+y si no nos encontramos en la ruta correcta, nos marcar error,
+***Nota:*** 
+
+- También es importante que el programa docker desktop ya este abierto.
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/9.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Si todo sale bien, mostra este mensaje de:
+
+-	Building 192.4s (25/25) FINISHED
+
+***Recuerda!:*** 
+Que el tiempo de construcción depende de tú internet, ya que descarga todas las librerias que necesita para funcionar,
+así que ese tiempo puede variar. 
+
+En la terminal verás en color verde que se creo todo lo necesario de manera correcta para que funcione en nuestro docker desktop: 
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/10.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+En nuestro pograma de docker desktop veremos nuestros contenedores creados, 
+y haciendo clic en la columna port, donde se encuntra nuestro frontend; Veremos nuestra interfaz funcionando:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/11.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Después de hacer clic en:
+
+- ***La columna port 8501:8501***
+
+Se despligará nuestra interfaz funcionando.
 
 
 

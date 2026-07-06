@@ -516,11 +516,19 @@ Para subir un archivo csv y hacer preguntas, es la misma dinamica que hicimos co
 Ahora vamos con docker:
 
 -	Primero para hacer pruebas en local, y todo funcione bien. Descargamos docker desktop de este enlace:
-  
-   https://www.docker.com/products/docker-desktop/ 
+
+ 	                     https://www.docker.com/products/docker-desktop/ 
 
   <p align="center">
     <img src="Imagenes_Readme/Imagenes_Docker/1.png" width="70%" alt="Documentación de Streamlit">
+   </p>
+
+Una ves descargado en el sistema operativo de tú preferencia, abres el programa docker Desktop,
+verás que no tienes ningun contenedor (containers) aún, esos son los que vamos a crear. 
+Y del lado derecho hay un icono de forma de engrane, en esa sección puedes modificar varios parametros ha usar para crear tus contenedores.
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Docker/2.png" width="70%" alt="Documentación de Streamlit">
    </p>
 
 

@@ -16,3 +16,6 @@ __pycache__/
 # Logs
 *.log
 
+#Archivo de ChromaDb
+chroma_db/
+

@@ -551,13 +551,45 @@ Ya que estos archivos contendrán:
 -	Librerias usadas en nuestro proyecto.
 -	Se creará otro archivo llamado dockerignore, igual sin ninguna extensión para no subir variables de entorno entre demás cosas que no debemos compartir por seguridad.
 -	
-## Nuestro archivo DockerFile tiene la siguiente forma:
+## Archivo DockerFile:
+
+Contiene las instrucciones secuenciales para empaquetar tú aplicación. A continuación, pongo una serie de pasos para crearlo, 
+construir tú imagen y ponerla a funcionar:
+
+1. Preparar tu proyectoCrea una carpeta en tú computadora que contenga los archivos de tu código o aplicación (por ejemplo, tus scripts de Python).
+2. Crear el archivo Dockerfile dentro de esa misma carpeta, crea un archivo de texto y asígnale exactamente el nombre Dockerfile (sin ninguna extensión como .txt o .doc).
+3. Escribir las instrucciones básicas, abre el Dockerfile con cualquier editor de código o notas e ingresa la siguiente estructura esencial:
+
+#Dockerfile
+- # 1 Define la imagen base desde Docker Hub (ej. Node, Python, Ubuntu)
+FROM
+
+- # 2. Crea y define el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+- # 3. Copia los archivos de configuración de dependencias primero (mejora la caché)
+COPY package*.
+
+- # 4. Ejecuta comandos para instalar tus librerías o dependencias
+RUN pip install
+
+- # 5. Copia el resto de los archivos de tu proyecto al contenedor
+COPY . .
+
+- # 6. Indica el puerto que usará tu contenedor (opcional)
+EXPOSE 3000
+
+- # 7. Define el comando que arrancará tu aplicación al iniciar el contenedor
+CMD [ ]
+
+El archivo DockerFile quedará como se muestra a continuación:
 
  <p align="center">
     <img src="Imagenes_Readme/Imagenes_Docker/4.png" width="70%" alt="Documentación de Streamlit">
    </p>
    
-Mientras nuestro archivo dockerignore tiene la siguente forma:
+Mientras nuestro archivo dockerignore tiene dentro los archivos pesados o locales que no quieres que se suban al contenedor,
+como node_modules/, .git/ o archivos de configuración locales, API_keys, por mencionar algunos. Se muestra una imagen ilustratia:
 
  <p align="center">
     <img src="Imagenes_Readme/Imagenes_Docker/5.png" width="70%" alt="Documentación de Streamlit">

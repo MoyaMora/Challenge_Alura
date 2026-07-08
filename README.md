@@ -248,44 +248,12 @@ Estas decisiones permiten proteger la API y garantizar un funcionamiento consist
 
 ---
 
-# 📌 Resumen del flujo RAG
+# 📌 DIAGRAMA DE FLUJO DEL PROYECTO AGENTE_RAG
 
-```text
-Usuario
-      │
-      ▼
-Sube un PDF o CSV
-      │
-      ▼
-Extracción del contenido
-      │
-      ▼
-Fragmentación (Chunks)
-      │
-      ▼
-Embeddings
-      │
-      ▼
-ChromaDB (Base Vectorial)
-      │
-      ▼
-Pregunta del usuario
-      │
-      ▼
-Búsqueda semántica
-      │
-      ▼
-Recuperación de fragmentos relevantes
-      │
-      ▼
-Construcción del contexto
-      │
-      ▼
-Groq + Llama 3.1
-      │
-      ▼
-Respuesta en lenguaje natural
-```
+   <p align="center">
+    <img src="Imagenes_Readme/Diagrama_de_Trabajo_del_Proyecto.jpg" width="70%" alt="DIAGRAMA DE FLUJO DE MI PROYECTO">
+   </p>
+
 
 Esta arquitectura permite que el agente responda preguntas sobre documentos privados de manera rápida, precisa y fundamentada, combinando las capacidades de búsqueda semántica de **ChromaDB** con el poder de generación de lenguaje de **Llama 3.1**, implementando una solución moderna basada en **Retrieval-Augmented Generation (RAG)**.
 

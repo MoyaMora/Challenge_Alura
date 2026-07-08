@@ -560,27 +560,28 @@ construir tú imagen y ponerla a funcionar:
 2. Crear el archivo Dockerfile dentro de esa misma carpeta, crea un archivo de texto y asígnale exactamente el nombre Dockerfile (sin ninguna extensión como .txt o .doc).
 3. Escribir las instrucciones básicas, abre el Dockerfile con cualquier editor de código o notas e ingresa la siguiente estructura esencial:
 
-#Dockerfile
-- # 1 Define la imagen base desde Docker Hub (ej. Node, Python, Ubuntu)
-FROM
+***Dockerfile***
 
-- # 2. Crea y define el directorio de trabajo dentro del contenedor
-WORKDIR /app
+- PASO 1: Define la imagen base desde Docker Hub (ej. Node, Python, Ubuntu)
+          FROM
 
-- # 3. Copia los archivos de configuración de dependencias primero (mejora la caché)
-COPY package*.
+- PASO 2: Crea y define el directorio de trabajo dentro del contenedor
+          WORKDIR /app
 
-- # 4. Ejecuta comandos para instalar tus librerías o dependencias
-RUN pip install
+- PASO 3: Copia los archivos de configuración de dependencias primero (mejora la caché)
+          COPY package*.
 
-- # 5. Copia el resto de los archivos de tu proyecto al contenedor
-COPY . .
+- PASO 4: Ejecuta comandos para instalar tus librerías o dependencias
+          RUN pip install
 
-- # 6. Indica el puerto que usará tu contenedor (opcional)
-EXPOSE 3000
+- PASO 5: Copia el resto de los archivos de tu proyecto al contenedor
+          COPY . .
 
-- # 7. Define el comando que arrancará tu aplicación al iniciar el contenedor
-CMD [ ]
+- PASO 6: Indica el puerto que usará tu contenedor (opcional)
+          EXPOSE 3000
+
+- PASO 7: Define el comando que arrancará tu aplicación al iniciar el contenedor
+          CMD [ ]
 
 El archivo DockerFile quedará como se muestra a continuación:
 

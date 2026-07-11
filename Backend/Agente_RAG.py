@@ -150,15 +150,22 @@ async def subir_csv(file: UploadFile = File(...)):
             coleccion_csv.delete(ids=ids_existentes)
 
         # Guardamos chunks en ChromaDB
-        coleccion_csv.add(
-            documents=chunks_csv,
-            ids=[f"csv_chunk_{i}" for i in range(len(chunks_csv))]
-        )
+        #coleccion_csv.add(
+        #    documents=chunks_csv,
+        #    ids=[f"csv_chunk_{i}" for i in range(len(chunks_csv))]
+        #)
+        # Modificado
+        print("Cantidad de chunks:", len(chunks_csv))
 
         return {
-            "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
+            "mensaje": "CSV procesado hasta antes de ChromaDB",
             "chunks_creados": len(chunks_csv)
         }
+
+        #return {
+        #    "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
+        #    "chunks_creados": len(chunks_csv)
+        #}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del CSV: {e}")

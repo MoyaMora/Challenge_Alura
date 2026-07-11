@@ -53,7 +53,9 @@ chroma_client = chromadb.Client()
 
 # Esto descargará el modelo una sola vez y lo correrá localmente sin pedirte llaves API
 modelo_embeddings = embedding_functions.SentenceTransformerEmbeddingFunction(
-    model_name="all-MiniLM-L6-v2" # Ó el modelo que se quiera utilizar.
+    # Ó el modelo que se quiera utilizar.
+    model_name="paraphrase-MiniLM-L3-v2"
+    #model_name="all-MiniLM-L6-v2" 
 )
 
 # Fragmentos guardados del archivo pdf o csv:

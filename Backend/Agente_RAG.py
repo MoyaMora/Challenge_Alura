@@ -172,7 +172,7 @@ async def subir_csv(file: UploadFile = File(...)):
         ############
         print("Cantidad de chunks CSV:", len(chunks_csv))
         print("Iniciando inserción en ChromaDB...")
-        tamaño_lote = 10
+        tamaño_lote = 5
         for inicio in range(0, len(chunks_csv), tamaño_lote):
 
             try:

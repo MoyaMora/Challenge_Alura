@@ -2,6 +2,7 @@
 from librerias_backend import *
 
 os.environ["ANONYMIZED_TELEMETRY"] = "False"
+os.environ["CHROMA_PRODUCT_TELEMETRY_IMPL"] = "none"
 
 # CARGAR VARIABLES DE ENTORNO DESDE EL ARCHIVO .ENV
 # Esto busca el archivo .env y carga sus variables
@@ -173,17 +174,30 @@ async def subir_csv(file: UploadFile = File(...)):
         print("Iniciando inserción en ChromaDB...")
         tamaño_lote = 10
         for inicio in range(0, len(chunks_csv), tamaño_lote):
-            lote_documentos = chunks_csv[inicio:inicio+tamaño_lote]
-            lote_ids = [f"csv_chunk_{i}"
-                        for i in range(inicio, inicio + len(lote_documentos))
-                        ]
 
-            print(f"Insertando lote {inicio} - {inicio + len(lote_documentos)}")
+            try:
+                
+                lote_documentos = chunks_csv[inicio:inicio+tamaño_lote]
+                
+                lote_ids = [f"csv_chunk_{i}"
+                            for i in range(inicio, inicio + len(lote_documentos))
+                ]
 
-            coleccion_csv.add(
-                documents=lote_documentos,
-                ids=lote_ids
-                )
+                print(f"Insertando lote {inicio} - {inicio + len(lote_documentos)}")
+
+                coleccion_csv.add(
+                    documents=lote_documentos,
+                    ids=lote_ids
+                    )
+                
+                print(f"Lote {inicio} insertado correctamente")
+            # Revisando si el ultimo lote falla o el Render no lo hace por que es gratis y pasamos eso:
+            except Exception as e:
+                print("ERROR EN LOTE")
+                print(e)
+                raise
+        
+        
         print("Termino ciclo for")
         print("CSV guardado correctamente en ChromaDB")
         print("Cantidad almacenada:",coleccion_csv.count())
@@ -192,6 +206,9 @@ async def subir_csv(file: UploadFile = File(...)):
             "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
             "chunks_creados": len(chunks_csv)
         }
+    
+    #### 
+    
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del CSV: {e}")

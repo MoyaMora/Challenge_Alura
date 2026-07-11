@@ -48,7 +48,8 @@ if archivo_subido is not None:
                 if response.status_code == 200:
                     st.success(f"¡Archivo {archivo_subido.name} indexado con éxito!")
                 else:
-                    st.error(f"Error de la API: {response.text}")
+                    st.error(f"""Error de la API Código HTTP: {response.status_code}
+                             Respuesta:{response.text}""")
             except requests.exceptions.ConnectionError:
                 st.error("❌ No se pudo conectar con la API. ¿Olvidaste encender FastAPI en el puerto 8000?")
 

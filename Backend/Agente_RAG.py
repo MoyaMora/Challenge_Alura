@@ -36,14 +36,17 @@ async def manejador_error_validacion(request, exc):
         }
     )
 
+os.environ["CHROMA_TELEMETRY"] = "false"
+
 # Evita problemas si el directorio no existe la primera vez que se ejecuta.
 os.makedirs("./chroma_db", exist_ok=True)
 
 # Aqui comienza la configuración de la base de datos vectorial (RAG)
 # Inicializamos ChromaDB en memoria
-chroma_client = chromadb.PersistentClient(
-    path="./chroma_db"
-)
+chroma_client = chromadb.Client()
+#chroma_client = chromadb.PersistentClient(
+#    path="./chroma_db"
+#)
 
 # Usamos un modelo de embeddings ligero de HuggingFace que corre localmente sin llaves de API
 #from chromadb.utils import embedding_functions
@@ -154,13 +157,31 @@ async def subir_csv(file: UploadFile = File(...)):
         #    documents=chunks_csv,
         #    ids=[f"csv_chunk_{i}" for i in range(len(chunks_csv))]
         #)
-        # Modificado
-        print("Cantidad de chunks:", len(chunks_csv))
+        # Modificado################
 
-        return {
-            "mensaje": "CSV procesado hasta antes de ChromaDB",
-            "chunks_creados": len(chunks_csv)
-        }
+        #print("Cantidad de chunks:", len(chunks_csv))
+
+        #return {
+        #    "mensaje": "CSV procesado hasta antes de ChromaDB",
+        #    "chunks_creados": len(chunks_csv)
+        #}
+        ############
+        print("Cantidad de chunks CSV:", len(chunks_csv))
+        print("Iniciando inserción en ChromaDB...")
+        tamaño_lote = 10
+        for inicio in range(0, len(chunks_csv), tamaño_lote):
+            lote_documentos = chunks_csv[inicio:inicio+tamaño_lote]
+            lote_ids = [f"csv_chunk_{i}"
+                        for i in range(inicio, inicio + len(lote_documentos))
+                        ]
+
+            print(f"Insertando lote {inicio} - {inicio + len(lote_documentos)}")
+
+            coleccion_csv.add(
+                documents=lote_documentos,
+                ids=lote_ids
+                )
+        print("CSV guardado correctamente en ChromaDB")
 
         #return {
         #    "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",

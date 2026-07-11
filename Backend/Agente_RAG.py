@@ -1,6 +1,8 @@
 #Importando librerias:
 from librerias_backend import *
 
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+
 # CARGAR VARIABLES DE ENTORNO DESDE EL ARCHIVO .ENV
 # Esto busca el archivo .env y carga sus variables
 # en la memoria del sistema. Cargando la API_KEY de Groq:
@@ -36,7 +38,6 @@ async def manejador_error_validacion(request, exc):
         }
     )
 
-os.environ["CHROMA_TELEMETRY"] = "false"
 
 # Evita problemas si el directorio no existe la primera vez que se ejecuta.
 os.makedirs("./chroma_db", exist_ok=True)
@@ -183,12 +184,14 @@ async def subir_csv(file: UploadFile = File(...)):
                 documents=lote_documentos,
                 ids=lote_ids
                 )
+        print("Termino ciclo for")
         print("CSV guardado correctamente en ChromaDB")
+        print("Cantidad almacenada:",coleccion_csv.count())
 
-        #return {
-        #    "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
-        #    "chunks_creados": len(chunks_csv)
-        #}
+        return {
+            "mensaje": f"CSV '{file.filename}' indexado correctamente en la Base Vectorial.",
+            "chunks_creados": len(chunks_csv)
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al procesar la subida del CSV: {e}")

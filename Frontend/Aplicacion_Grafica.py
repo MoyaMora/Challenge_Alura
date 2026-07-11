@@ -16,9 +16,9 @@ print(f"El backend está configurado para correr en: {API_URL}")
 # Desactivar advertencia de paralelismo en la interfaz
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-st.set_page_config(page_title="Buscador RAG Multidocumento", page_icon="🤖", layout="centered")
-st.title("Asistente RAG Multi-Documento")
-st.subheader("Carga archivos PDF o CSV y consulta cualquier tipo de información con IA (RAG).")
+st.set_page_config(page_title="Moya Buscador RAG Multidocumento", page_icon="🤖", layout="centered")
+st.title("Asistente Moya RAG Multi-Documento")
+st.subheader("Carga archivos PDF o CSV y consulta cualquier tipo de información con IA.")
 
 # Selector visual del tipo de archivo
 tipo_fuente = st.radio("Selecciona el tipo de documento:",
@@ -32,7 +32,7 @@ tipo_fuente = st.radio("Selecciona el tipo de documento:",
 fuente_key = "pdf" if "PDF" in tipo_fuente else "csv"
 
 # SECCIÓN 1: CARGA DE ARCHIVOS 
-st.header("1. Sube tu archivo ")
+st.header("1. Sube tú archivo ")
 #st.caption("📌 Tamaño máximo permitido: 200MB | Formatos: PDF o CSV")
 
 extensiones = ["pdf"] if fuente_key == "pdf" else ["csv"]

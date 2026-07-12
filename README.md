@@ -836,14 +836,14 @@ En esos 512 MB que nos da Render tienen que caber, al mismo tiempo:
 - Las consultas a Groq.
 - Python y todas las librerías.
 
-Yo tuve problemas al insertar los 61 Fragmentos de 10 en 10 de mi archivo CSV. En algún momento el consumo de memoria aumentó demasiado y Render tuvo dificultades. 
+Yo tuve problemas al insertar 61 Fragmentos de 10 en 10 de mi archivo CSV. En algún momento el consumo de memoria aumentó demasiado y Render tuvo dificultades. 
 Para solucionarlo se redujo el tamaño del lote a 5, disminuyó el pico de memoria y el archivo csv y pdf se puden susbir, procesar y 
 posteriormente se puede hacerse uso de la IA para que responda nuestras preguntas.
 
 
 # Dirección URL para hacer uso del proyecto:
 
-Comparto la dirección de la págian donde funciona gracias a Render:
+Comparto la dirección de la página donde funciona gracias a Render:
 
 
 ```

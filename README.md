@@ -808,7 +808,8 @@ Se muestra imagen ilustrativa:
 # Nota importante:
 
 Recuerda que; ***Los recursos en Render son muy limitados***, usa por favor los archivos que 
-se encuentran en la carpeta ***Documentos_de_prueba*** en este repositorio o usa documentos no tan pesados, ya que los recursos gratuitos de Render son:
+se encuentran en la carpeta ***Documentos_de_prueba*** en este repositorio o usa documentos no tan pesados, ya que cuando subas algun archivo y pase a:
+***Procesando y generando vectores locales*** puede tardar un poco, ***NO te desesperes***. Cuando termine manda un mensaje diciendo: ***¡Archivo "Nombre del archivo subido" indexado con éxito! ***, ya que los recursos gratuitos de Render son:
 
 
                                                 |     RAM    |   CPU   |

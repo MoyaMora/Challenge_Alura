@@ -856,7 +856,7 @@ Render apaga o prende el servicio prestado y puede ocurrir que al inicio salga e
     <img src="Imagenes_Readme/Imagenes_Nube/13.png" width="70%" alt="Documentación de Nube">
    </p>
 
-***Nota***: No te preocupes es normal, render está **reactivando** los servicios de la página gratuita creada.
+# ***Nota***: No te preocupes es normal, render está **reactivando** los servicios de la página gratuita creada.
 
 
 

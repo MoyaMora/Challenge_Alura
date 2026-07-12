@@ -811,29 +811,31 @@ Recuerda que; ***Los recursos en Render son muy limitados***, usa por favor los 
 se encuentran en la carpeta ***Documentos_de_prueba*** en este repositorio o usa documentos no tan pesados, ya que los recursos gratuitos de Render son:
 
 
-|     RAM    |   CPU   |
-|------------|---------|
-|   512 MB   |   0.1 % |
+                                                |     RAM    |   CPU   |
+                                                |------------|---------|
+                                                |   512 MB   |   0.1 % |
+
 
 
 Como puedes observar es muy limitado los recursos gratiuitos dados por Render.
-Obviamente en local funcionaba todo muy fluido ya que los recursos eran otros, 16GB de RAM con un microprocesador i9 de 4 nucleos.
-Que actualmente las computadoras tran igual o superior, si deseas usarlo de manera local funcioanra muy fluido sin problema alguno,
-o si dispones de otro lugar donde desplegar el proyecto con mayores recuros como OCI, AWS, funcioanra más rapido por los recursos brindados
+Obviamente en local funcionaba todo muy fluido ya que los recursos eran otros, como por ejemplo una memoria RAM de 16 GB.
+Que actualmente las computadoras tienen igual o superior recursos, si deseas usarlo de manera local funcionará muy fluido, esto debido 
+a los recursos que ofrezca tú computadora;
+O si dispones de otro lugar donde desplegar el proyecto con mayores recuros como OCI, AWS, funcioanra más rapido por los recursos brindados
 por esas instituciones.
 
 En el caso de desplegarlo en Render, La RAM es la memoria temporal que usa el programa mientras está funcionando.
 En esos 512 MB que nos da Render tienen que caber, al mismo tiempo:
 
-FastAPI.
-ChromaDB.
-El modelo de embeddings (SentenceTransformer).
-Pandas.
-Los archivos CSV o PDF que suban los usuarios.
-Las consultas a Groq.
-Python y todas las librerías.
+- FastAPI.
+- ChromaDB.
+- El modelo de embeddings (SentenceTransformer).
+- Pandas.
+- Los archivos CSV o PDF que suban los usuarios.
+- Las consultas a Groq.
+- Python y todas las librerías.
 
-Por eso tuve problemas al insertar los 61 chunks de 10 en 10. En algún momento el consumo de memoria aumentó demasiado y Render tuvo dificultades. 
+Yo tuve problemas al insertar los 61 Fragmentos de 10 en 10 de mi archivo CSV. En algún momento el consumo de memoria aumentó demasiado y Render tuvo dificultades. 
 Para solucionarlo se redujo el tamaño del lote a 5, disminuyó el pico de memoria y el archivo csv y pdf se puden susbir, procesar y 
 posteriormente se puede hacerse uso de la IA para que responda nuestras preguntas.
 
@@ -842,17 +844,18 @@ posteriormente se puede hacerse uso de la IA para que responda nuestras pregunta
 
 Comparto la dirección de la págian donde funciona gracias a Render:
 
+
 ```
 https://challenge-alura-frontend.onrender.com/ 
 ```
 
-Al cargar como Render apaga o prende el servicio prestado puede ocurrir que salga esto al inicio de la página:
+Render apaga o prende el servicio prestado y puede ocurrir que al inicio salga esto en la página:
 
  <p align="center">
     <img src="Imagenes_Readme/Imagenes_Nube/13.png" width="70%" alt="Documentación de Nube">
    </p>
 
-***Nota***: No te preocupes es normal, render esta solo reactivando los servicios de la página gratuita creada.
+***Nota***: No te preocupes es normal, render está **reactivando** los servicios de la página gratuita creada.
 
 
 

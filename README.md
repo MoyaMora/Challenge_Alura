@@ -648,39 +648,215 @@ La tematica de subir archivos y realizar preguntas a nuestra IA es la misma que 
 
 ---
 
-## 4. Evidencia del despliegue
+## 4. Pruebas en la Nube!
 
-Agregar alguno de los siguientes elementos:
+Despues de intentarlo varias veces, no se pudo crear una cuenta gratuita en oracle,
+Así que para desplegar nuestro proyecto recurrimos a otra estancia.
 
-- Enlace público de la aplicación.
-- Captura de pantalla.
-- URL del despliegue en OCI.
 
-Esto servirá para demostrar que el proyecto fue desplegado correctamente.
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/1.png" width="70%" alt="Documentación de Nube">
+   </p>
 
-Se ve mucho más profesional.
+Usamos Render para desplegar nuestro proyecto en la Nube:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/2.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+##Ventajas:
+
+- Despliegue directo desde GitHub.
+- Soporta Docker.
+- Muy fácil de configurar.
+- Certificado HTTPS automático.
+- Tiene plan gratuito. 
+
+##Desventajas:
+
+- El servicio entra en suspensión cuando no recibe tráfico durante un tiempo.
+- El almacenamiento del plan gratuito no es permanente, por lo que la base ChromaDB se perdería al reiniciar el servicio si no usas un volumen de pago. 
+- Ideal para mostrar un portafolio o un proyecto escolar.
+
+Como ya tenemos:
+
+- Docker funcionando.
+- GitHub listo.
+- Archivos docker.
+- Backend y Frontend separados. 
+
+Escogimos Render, ya que es el camino con menos dificultad para 
+publicar el proyecto y poderlo compartirlo mediante una URL.
+
+Más adelante, cuando necesitemos almacenamiento persistente, 
+más recursos o mayor disponibilidad, se puede migrar a OCI, AWS o Azure con cambios mínimos.
+
+En Render crearemos:
+
+- Un Web Service para el Backend (FastAPI).
+- Un Web Service para el Frontend (Streamlit). 
+
+***Nota:*** El frontend llamará al backend mediante una URL pública.
+
+
+## Creamos una cuenta en Render:
+
+Entramos a la página oficial de Render ( https://render.com/ ) y creamos una cuenta usando GitHub.
+Eso permitirá que Render acceda a tus repositorios para desplegarlos automáticamente.
+
+Una vez creado nuestro usuario en la pagina de Render; Le das clic en la pestaña de ***+New***, 
+y saldra otra pestaña con los servicios que puedes crear, dale clic en ***New Web Service***, como se muestra a continuación:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/3.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+Puedes conectarlo con el repositorio público que desees, posteriormente le das clic en el boton ***Connect***.
+
+Y ahora saldrá esta pantalla donde configuras la instalación de tus archivos docker:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/4.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+***Observa***, que en esta parte se configura:
+
+- Nombre de tú servicio web.
+- Ambiente de trabajo, en este caso Imágenes Docker.
+- Ruta de trabajo ( Carpeta donde guardas tus archivos Backend)
+- Y por ultimo tú ruta donde esta tú archivo DockerFile.Backend
+
+Una vez configures eso, te pedira que plan deseas usar, en este caso escogimos gratis,
+***Observa*** que los recursos que dan de forma gratuita son muy limitados:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/5.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+
+En las casillas marcadas con la flecha azul colocas el nombre de tus variables de entorno para tú backend,
+en mi caso la casilla de mombre de variables:
+
+- Se nombro: API_KEY_GROK 
+- Y en la casilla valor: gzk_******** (sin comillas),
+
+después abajo se encuentra un botón que dice ***Deploy Web Service***, le das clic y empieza a instalar todo.
+
+Una vez que instale todo te saldra un recuadro verde que dice ***Live***; 
+Indicando que ya se levanto tú direccion URL para tú backend y 
+más abajo indicado con la flecha azul te muestra la página que puedes usar para ver la ***interfaz de Fastapi***
+y puedes hacer las mismas pruebas que ya hicimos antes con cada uno de los endpoints:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/6.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+## Procedemos a configurar el Fronted (Streamlit)
+
+Los pasos son muy similares a los que hicismos anteriormente; Ahora para nuestro frontend,
+colocamos la capeta y ruta correspondiente donde se encuentran nuestros archivos fronted
+para realizar su instalación, como se aprecia en la siguiente imagen:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/7.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+
+Ahora configuramos nuestras variables de entorno:
+
+***Observa:*** que en la casilla de **Name_of _variable**:
+
+- Corresponde a el nombre de tú API_URL que le hayas dado.
+- En la casilla de **value**, en este caso va la direción de la ruta que nos creo en backend.
+
+después procedemos darle clic al botón, **Deploy Web Service** para que inicie su instalación.
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/8.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+Una vez se haya instalado todo; De igual forma nos saldrá el recuadro verde que dice ***Live***,
+y la direción URL que podremos ***compartir con quien sea*** para que use nuestra API, en cualquier parte del mundo.
+Nuestra interaz se ve así:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/9.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+Las flechas de color azul, nos indican los botones que podemos usar para interactuar con nuestra API,
+Y en este caso subimos un archivo csv para usarla; Se muestra a continuación imagen representativa:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/10.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+Una vez subido nuestro archivo escogido, procedemos a hacer una pregunta no tan directa a nuestro agente,
+y nos brinda una respuesta lo más acertivo a lo que le preguntamos:
+
+   <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/11.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+y podemos apreciar los fragmentos empleados del documento que se le dio a nuestro modelo de IA para dicernir que contestar.
+Se muestra imagen ilustrativa:
+
+<p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/12.png" width="70%" alt="Documentación de Nube">
+</p>
+
+
+#Nota importante:
+
+Recuerda que; ***Los recursos en Render son muy limitados***, usa por favor los archivos que 
+se encuentran en la carpeta ***Documentos_de_prueba*** en este repositorio o usa documentos no tan pesados, ya que los recursos gratuitos de Render son:
+
+
+|     RAM    |   CPU   |
+|------------|---------|
+|   512 MB   |   0.1 % |
+
+
+Como puedes observar es muy limitado los recursos gratiuitos dados por Render.
+Obviamente en local funcionaba todo muy fluido ya que los recursos eran otros, 16GB de RAM con un microprocesador i9 de 4 nucleos.
+Que actualmente las computadoras tran igual o superior, si deseas usarlo de manera local funcioanra muy fluido sin problema alguno,
+o si dispones de otro lugar donde desplegar el proyecto con mayores recuros como OCI, AWS, funcioanra más rapido por los recursos brindados
+por esas instituciones.
+
+En el caso de desplegarlo en Render, La RAM es la memoria temporal que usa el programa mientras está funcionando.
+En esos 512 MB que nos da Render tienen que caber, al mismo tiempo:
+
+FastAPI.
+ChromaDB.
+El modelo de embeddings (SentenceTransformer).
+Pandas.
+Los archivos CSV o PDF que suban los usuarios.
+Las consultas a Groq.
+Python y todas las librerías.
+
+Por eso tuve problemas al insertar los 61 chunks de 10 en 10. En algún momento el consumo de memoria aumentó demasiado y Render tuvo dificultades. 
+Para solucionarlo se redujo el tamaño del lote a 5, disminuyó el pico de memoria y el archivo csv y pdf se puden susbir, procesar y 
+posteriormente se puede hacerse uso de la IA para que responda nuestras preguntas.
+
+
+#Dirección URL para hacer uso del proyecto:
+
+Comparto la dirección de la págian donde funciona gracias a Render:
+
+```
+https://challenge-alura-frontend.onrender.com/ 
+```
+
+Al cargar como Render apaga o prende el servicio prestado puede ocurrir que salga esto al inicio de la página:
+
+ <p align="center">
+    <img src="Imagenes_Readme/Imagenes_Nube/13.png" width="70%" alt="Documentación de Nube">
+   </p>
+
+***Nota***: No te preocupes es normal, render esta solo reactivando los servicios de la página gratuita creada.
+
+
 
 ---
 
 
 
-
-
-
-La interfaz de Swagger permite probar todos los endpoints de la API.
-
-## 📸 Paso 1 — Abrir la documentación
-
-Ejecuta:
-
-```bash
-uvicorn archivo_reto_principal:app --reload
-```
-
-```text
-http://localhost:8000/docs
-```
-
-
-
-La interfaz de Swagger permite probar todos los endpoints de la API.

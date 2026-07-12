@@ -664,7 +664,7 @@ Usamos Render para desplegar nuestro proyecto en la Nube:
     <img src="Imagenes_Readme/Imagenes_Nube/2.png" width="70%" alt="Documentación de Nube">
    </p>
 
-##Ventajas:
+Ventajas:
 
 - Despliegue directo desde GitHub.
 - Soporta Docker.
@@ -672,7 +672,7 @@ Usamos Render para desplegar nuestro proyecto en la Nube:
 - Certificado HTTPS automático.
 - Tiene plan gratuito. 
 
-##Desventajas:
+Desventajas:
 
 - El servicio entra en suspensión cuando no recibe tráfico durante un tiempo.
 - El almacenamiento del plan gratuito no es permanente, por lo que la base ChromaDB se perdería al reiniciar el servicio si no usas un volumen de pago. 

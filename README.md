@@ -840,7 +840,7 @@ Para solucionarlo se redujo el tamaño del lote a 5, disminuyó el pico de memor
 posteriormente se puede hacerse uso de la IA para que responda nuestras preguntas.
 
 
-#Dirección URL para hacer uso del proyecto:
+# Dirección URL para hacer uso del proyecto:
 
 Comparto la dirección de la págian donde funciona gracias a Render:
 
